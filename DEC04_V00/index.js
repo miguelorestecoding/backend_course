@@ -1,78 +1,81 @@
-const fs = require('fs');
+const fs = require("fs");
 
 class ProductManager {
   constructor(path) {
     this.path = path;
   }
 
-  async addProduct(name, description, price, thumbnail, code, stock) {
+  async getProducts() {
     try {
-// id autonumerable
-const id =
-this.products.length === 0
-  ? 1
-  : this.products[this.products.length - 1].id + 1;
-
-//que todos los campos sean oblitarorios
-if (!name || !description || !price || !thumbnail || !code || !stock) {
-console.log("Todos los campos son obligatorios");
-} else if (this.products.find((product) => product.code === code)) {
-console.log(`El código ya existe`);
-} else {
-const newProduct = {
-  id,
-  name,
-  description,
-  price,
-  thumbnail,
-  code,
-  stock,
-};
-this.products.push(newProduct);
-}
-}
-
-
-
-    } catch (e) {
-      return e; 
+      if (fs.existsSync(this.path)) {
+        const infoProducts = await fs.promises.readFile(this.path, "utf8");
+        return JSON.parse(infoProducts);
+      } else {
+        return [];
+      }
+    } catch (err) {
+      return err;
     }
-
-  getProducts() {
-    return this.products;
   }
 
-  getProductsById(id) {
-    const productById = this.products.filter((product) => product.id === id);
-    if (productById.length === 0) {
-      console.log("Not found ");
+  async addProduct(obj) {
+    try {
+      const productsPrev = await this.getProducts();
+      let id
+      if(!productsPrev.length) {
+        id = 1
+      } else {
+        id = productsPrev[productsPrev.length - 1].id + 1;
+      }
+      productsPrev.push({...obj, id})
+      await fs.promises.writeFile(this.path, JSON.stringify(productsPrev));
+    } catch (err) {
+      return err;
     }
-    return productById;
   }
 
-  deleteProductById(id) {}
+  // getProductsById(id) {
+  //   const productById = this.products.filter((product) => product.id === id);
+  //   if (productById.length === 0) {
+  //     console.log("Not found ");
+  //   }
+  //   return productById;
+  // }
 
-  updateProductById(id, obj) {}
+  // deleteProductById(id) {}
+
+  // updateProductById(id, obj) {}
 }
 
-const myProductManager = new ProductManager();
-console.log(myProductManager.getProducts());
-myProductManager.addProduct(
-  "producto prueba",
-  "este es un producto prueba",
-  200,
-  "Sin imagen",
-  "abc123",
-  25
-);
-console.log(myProductManager.getProducts());
-myProductManager.addProduct(
-  "producto prueba",
-  "este es un producto prueba",
-  200,
-  "Sin imagen",
-  "abc123",
-  25
-);
-console.log(myProductManager.getProductsById(1));
-console.log(myProductManager.getProductsById(10));
+// Valida que todos los campos sean obligatorios?
+// Permite repetir el código?
+
+const product1 = {
+  title: 'producto1',
+  description: 'soy el producto1',
+  price: 100,
+  thumbnail: 'soy el thumbnail',
+  code: '1111',
+  stock: 10
+}
+
+const product2 = {
+  title: 'producto2',
+  description: 'soy el producto2',
+  price: 200,
+  thumbnail: 'soy el thumbnail',
+  code: '2222',
+  stock: 20
+}
+async function testing() {
+  const myProductManager = new ProductManager("Products.json");
+  const products = await myProductManager.getProducts();
+  console.log(`Antes de Agregar Productos: ${products}`);
+  await myProductManager.addProduct(product1)
+  console.log(`Después de Agregar Productos: ${products}`);
+}
+
+testing();
+
+
+
