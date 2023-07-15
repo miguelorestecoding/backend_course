@@ -34,6 +34,32 @@ class ProductManager {
     }
   }
 
+  async getProductsById(id) {
+    try {
+      const productsPrev = await this.getProducts();
+      const product = productsPrev.find(p => p.id === id);
+      if (!product) {
+        return console.log("Ese producto no se encuentra en el listado!")
+      } else {
+        return product;
+      }
+    } catch (err) {return err;}
+  }
+
+  async deleteProduct(id) {
+    try {
+      const productsPrev = await this.getProducts();
+      if (productsPrev.find(product => product.id === id)) {
+        const newProducts = productsPrev.filter(p => p.id !== id);
+        await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
+      } else {
+        return console.log("Ese producto no se encuentra en el listado!")
+      }
+    } catch (err) {
+      return err;
+    }
+  }
+
   // getProductsById(id) {
   //   const productById = this.products.filter((product) => product.id === id);
   //   if (productById.length === 0) {
@@ -41,8 +67,6 @@ class ProductManager {
   //   }
   //   return productById;
   // }
-
-  // deleteProductById(id) {}
 
   // updateProductById(id, obj) {}
 }
@@ -67,12 +91,20 @@ const product2 = {
   code: '2222',
   stock: 20
 }
+
 async function testing() {
   const myProductManager = new ProductManager("Products.json");
+  // console.log("Antes de Agregar Productos: ", products);
+  // await myProductManager.addProduct(product1)
+  // await myProductManager.addProduct(product2)
+  // console.log(`${product1.title} agergado!`)
+  // await myProductManager.addProduct(product2)
+  // console.log(`${product2.title} agergado!`)
+  // await myProductManager.deleteProduct(7)
+  const findProduct = await myProductManager.getProductsById(10)
   const products = await myProductManager.getProducts();
-  console.log(`Antes de Agregar Productos: ${products}`);
-  await myProductManager.addProduct(product1)
-  console.log(`Después de Agregar Productos: ${products}`);
+  console.log(findProduct);
+  // console.log("Después de Agregar Productos: ", products);
 }
 
 testing();
