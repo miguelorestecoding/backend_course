@@ -21,13 +21,13 @@ class ProductManager {
   async addProduct(obj) {
     try {
       const productsPrev = await this.getProducts();
-      let id
-      if(!productsPrev.length) {
-        id = 1
+      let id;
+      if (!productsPrev.length) {
+        id = 1;
       } else {
         id = productsPrev[productsPrev.length - 1].id + 1;
       }
-      productsPrev.push({...obj, id})
+      productsPrev.push({ ...obj, id });
       await fs.promises.writeFile(this.path, JSON.stringify(productsPrev));
     } catch (err) {
       return err;
@@ -37,36 +37,33 @@ class ProductManager {
   async getProductsById(id) {
     try {
       const productsPrev = await this.getProducts();
-      const product = productsPrev.find(p => p.id === id);
+      const product = productsPrev.find((p) => p.id === id);
       if (!product) {
-        return console.log("Ese producto no se encuentra en el listado!")
+        return console.log("Imposible Mostrar: Ese producto no se encuentra en el listado.");
       } else {
         return product;
-      }
-    } catch (err) {return err;}
-  }
-
-  async deleteProduct(id) {
-    try {
-      const productsPrev = await this.getProducts();
-      if (productsPrev.find(product => product.id === id)) {
-        const newProducts = productsPrev.filter(p => p.id !== id);
-        await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
-      } else {
-        return console.log("Ese producto no se encuentra en el listado!")
       }
     } catch (err) {
       return err;
     }
   }
 
-  // getProductsById(id) {
-  //   const productById = this.products.filter((product) => product.id === id);
-  //   if (productById.length === 0) {
-  //     console.log("Not found ");
-  //   }
-  //   return productById;
-  // }
+  async deleteProduct(id) {
+    try {
+      const productsPrev = await this.getProducts();
+      const product = productsPrev.find((p) => p.id === id);
+      if (!product) {
+        return console.log(
+          "Imposible Borrar: Ese producto no se encuentra en el listado."
+        );
+      } else {
+        const newProducts = productsPrev.filter((p) => p.id !== id);
+        await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
+      }
+    } catch (err) {
+      return err;
+    }
+  }
 
   // updateProductById(id, obj) {}
 }
@@ -75,22 +72,22 @@ class ProductManager {
 // Permite repetir el código?
 
 const product1 = {
-  title: 'producto1',
-  description: 'soy el producto1',
+  title: "producto1",
+  description: "soy el producto1",
   price: 100,
-  thumbnail: 'soy el thumbnail',
-  code: '1111',
-  stock: 10
-}
+  thumbnail: "soy el thumbnail",
+  code: "1111",
+  stock: 10,
+};
 
 const product2 = {
-  title: 'producto2',
-  description: 'soy el producto2',
+  title: "producto2",
+  description: "soy el producto2",
   price: 200,
-  thumbnail: 'soy el thumbnail',
-  code: '2222',
-  stock: 20
-}
+  thumbnail: "soy el thumbnail",
+  code: "2222",
+  stock: 20,
+};
 
 async function testing() {
   const myProductManager = new ProductManager("Products.json");
@@ -100,14 +97,11 @@ async function testing() {
   // console.log(`${product1.title} agergado!`)
   // await myProductManager.addProduct(product2)
   // console.log(`${product2.title} agergado!`)
-  // await myProductManager.deleteProduct(7)
-  const findProduct = await myProductManager.getProductsById(10)
+  await myProductManager.deleteProduct(8)
+  // const findProduct = await myProductManager.getProductsById(1);
   const products = await myProductManager.getProducts();
-  console.log(findProduct);
+  console.log(products);
   // console.log("Después de Agregar Productos: ", products);
 }
 
 testing();
-
-
-
