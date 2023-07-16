@@ -82,46 +82,55 @@ class ProductManager {
   }
 }
 
-// Valida que todos los campos sean obligatorios?
-// Permite repetir el código?
-
-const product1 = {
-  title: "producto1",
-  description: "soy el producto1",
-  price: 100,
-  thumbnail: "soy el thumbnail",
-  code: "1111",
-  stock: 10,
-};
-
-const product2 = {
-  title: "producto2",
-  description: "soy el producto2",
-  price: 200,
-  thumbnail: "soy el thumbnail",
-  code: "2222",
-  stock: 20,
-};
-
 const productUpdated = {
   title: "productUpdated",
   age: 100,
 }
 
+const testProduct = {
+  title: "producto prueba",
+  description: "Este es un producto prueba",
+  price: 200,
+  thumbnail: "Sin Imagen",
+  code: "abc123",
+  stock: 25,
+};
+
 async function testing() {
+  //Se creará una instancia de la clase “ProductManager”
   const myProductManager = new ProductManager("Products.json");
-  // console.log("Antes de Agregar Productos: ", products);
-  // await myProductManager.addProduct(product1)
-  // await myProductManager.addProduct(product2)
-  // console.log(`${product1.title} agergado!`)
-  // await myProductManager.addProduct(product2)
-  // console.log(`${product2.title} agergado!`)
-  // await myProductManager.deleteProduct(8)
-  // const findProduct = await myProductManager.getProductsById(1);
-  await myProductManager.updateProductById(5, productUpdated)
-  const products = await myProductManager.getProducts();
+
+  // Se llamará “getProducts” recién creada la instancia, debe devolver un arreglo vacío []
+  let products = await myProductManager.getProducts()
   console.log(products);
-  // console.log("Después de Agregar Productos: ", products);
+
+// Se llamará al método “addProduct” con los campos:
+// title: “producto prueba”
+// description:”Este es un producto prueba”
+// price:200,
+// thumbnail:”Sin imagen”
+// code:”abc123”,
+// stock:25
+// El objeto debe agregarse satisfactoriamente con un id generado automáticamente SIN REPETIRSE
+  await myProductManager.addProduct(testProduct);
+  await myProductManager.addProduct(testProduct);
+
+  // Se llamará el método “getProducts” nuevamente, esta vez debe aparecer el producto recién agregado
+  products = await myProductManager.getProducts()
+  console.log(products);
+
+  // Se llamará al método “getProductById” y se corroborará que devuelva el producto con el id especificado, en caso de no existir, debe arrojar un error.
+  console.log(await myProductManager.getProductsById(1));
+  console.log(await myProductManager.getProductsById(3));
+
+  // Se llamará al método “updateProduct” y se intentará cambiar un campo de algún producto, se evaluará que no se elimine el id y que sí se haya hecho la actualización.
+  await myProductManager.updateProductById(1, productUpdated)
+  console.log(await myProductManager.getProductsById(1));
+
+  // Se llamará al método “deleteProduct”, se evaluará que realmente se elimine el producto o que arroje un error en caso de no existir.
+  await myProductManager.deleteProduct(2)
+  console.log(await myProductManager.getProducts());
+  console.log(await myProductManager.deleteProduct(3));  
 }
 
 testing();
