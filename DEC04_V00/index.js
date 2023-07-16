@@ -65,7 +65,21 @@ class ProductManager {
     }
   }
 
-  // updateProductById(id, obj) {}
+  async updateProductById(id, obj) {
+    try {
+      const productsPrev = await this.getProducts(id);
+      const productIndex = productsPrev.findIndex((p) => p.id === id);
+      if (productIndex === -1) {
+        return console.log(
+          "Imposible Actualizar: Ese producto no se encuentra en el listado."
+        );
+      } else {
+        const productToUpdate = productsPrev[productIndex];
+        productsPrev[productIndex] = {...productToUpdate, ...obj}
+        await fs.promises.writeFile(this.path, JSON.stringify(productsPrev))
+      }      
+    } catch (err) {return err;}
+  }
 }
 
 // Valida que todos los campos sean obligatorios?
@@ -89,6 +103,11 @@ const product2 = {
   stock: 20,
 };
 
+const productUpdated = {
+  title: "productUpdated",
+  age: 100,
+}
+
 async function testing() {
   const myProductManager = new ProductManager("Products.json");
   // console.log("Antes de Agregar Productos: ", products);
@@ -97,8 +116,9 @@ async function testing() {
   // console.log(`${product1.title} agergado!`)
   // await myProductManager.addProduct(product2)
   // console.log(`${product2.title} agergado!`)
-  await myProductManager.deleteProduct(8)
+  // await myProductManager.deleteProduct(8)
   // const findProduct = await myProductManager.getProductsById(1);
+  await myProductManager.updateProductById(5, productUpdated)
   const products = await myProductManager.getProducts();
   console.log(products);
   // console.log("Después de Agregar Productos: ", products);
