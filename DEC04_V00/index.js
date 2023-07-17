@@ -73,6 +73,8 @@ class ProductManager {
         return console.log(
           "Imposible Actualizar: Ese producto no se encuentra en el listado."
         );
+      } else if ('id' in obj) {
+        return console.log("Imposible Actualizar: No se permite sobrescribir el campo id");
       } else {
         const productToUpdate = productsPrev[productIndex];
         productsPrev[productIndex] = {...productToUpdate, ...obj}
@@ -85,6 +87,11 @@ class ProductManager {
 const productUpdated = {
   title: "productUpdated",
   age: 100,
+}
+
+const productIdUpdated = {
+  title: "productUpdated",
+  id: 100,
 }
 
 const testProduct = {
@@ -124,6 +131,7 @@ async function testing() {
   console.log(await myProductManager.getProductsById(3));
 
   // Se llamará al método “updateProduct” y se intentará cambiar un campo de algún producto, se evaluará que no se elimine el id y que sí se haya hecho la actualización.
+  console.log(await myProductManager.updateProductById(1, productIdUpdated))
   await myProductManager.updateProductById(1, productUpdated)
   console.log(await myProductManager.getProductsById(1));
 
