@@ -141,4 +141,7 @@ async function testing() {
   console.log(await myProductManager.deleteProduct(3));  
 }
 
-testing();
+// testing();
+
+const  ProductManager = new ProductManager('Products.json');
+export default ProductManager;

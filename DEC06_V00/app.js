@@ -3,38 +3,20 @@
 // Aspectos a incluir:
 // Se deberá utilizar la clase ProductManager que actualmente utilizamos con persistencia de archivos.
 // Desarrollar un servidor express que, en su archivo app.js importe al archivo de ProductManager que actualmente tenemos.
-
 import express from "express";
-const products = [
-  {
-    title: "productUpdated",
-    description: "Este es un producto prueba",
-    price: 200,
-    thumbnail: "Sin Imagen",
-    code: "abc123",
-    stock: 25,
-    id: 1,
-    age: 100,
-  },
-];
+import ProductManager from "../DEC04_V00/ProductManager"
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
 
-app.listen(8080, () => {
-
-  app.get("/saludo", (req, res) => {
-    res.send("Hola a todos desde el Backend");
-  });
-
-  app.get("/datos", (req, res) => {
-    console.log(req.query);
-    res.json({ message: "Productos Encontrados:", products });
-  });
-
-
-
-
-  console.log("Escuchando el puerto 8080");
+app.get('/api/products', async (req, res) => {
+    try {
+    const products = await ProductManager.getProducts()
+    res.status(200).json({messege: "Products", products })
+    } catch (err) {
+res.status(500).json({err})
+    }
 });
 
 // El servidor debe contar con los siguientes endpoints:
