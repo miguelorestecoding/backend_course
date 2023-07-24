@@ -1,1 +1,32 @@
-[{"title":"productUpdated","description":"Este es un producto prueba","price":200,"thumbnail":"Sin Imagen","code":"abc123","stock":25,"id":1,"age":100}]
+[
+  {
+    "title": "Producto01",
+    "description": "Este es el Producto01",
+    "price": 200,
+    "thumbnail": "Sin Imagen",
+    "code": "abc123",
+    "stock": 25,
+    "id": 1,
+    "age": 100
+  },
+  {
+    "title": "Producto02",
+    "description": "Este es el Producto02",
+    "price": 200,
+    "thumbnail": "Sin Imagen",
+    "code": "abc123",
+    "stock": 25,
+    "id": 2,
+    "age": 100
+  },
+  {
+    "title": "Producto03",
+    "description": "Este es el Producto03",
+    "price": 200,
+    "thumbnail": "Sin Imagen",
+    "code": "abc123",
+    "stock": 25,
+    "id": 3,
+    "age": 100
+  }
+]
