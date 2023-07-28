@@ -19,7 +19,7 @@
 // Status es true por defecto.
 // Todos los campos son obligatorios, a excepción de thumbnails
 // La ruta PUT /:pid deberá tomar un producto y actualizarlo por los campos enviados desde body. NUNCA se debe actualizar o eliminar el id al momento de hacer dicha actualización.
-// La ruta DELETE /:pid deberá eliminar el producto con el pid indicado. 
+// La ruta DELETE /:pid deberá eliminar el producto con el pid indicado.
 
 // Para el carrito, el cual tendrá su router en /api/carts/, configurar dos rutas:
 // La ruta raíz POST / deberá crear un nuevo carrito con la siguiente estructura:
@@ -30,7 +30,7 @@
 // product: SÓLO DEBE CONTENER EL ID DEL PRODUCTO (Es crucial que no agregues el producto completo)
 // quantity: debe contener el número de ejemplares de dicho producto. El producto, de momento, se agregará de uno en uno.
 
-// Además, si un producto ya existente intenta agregarse al producto, incrementar el campo quantity de dicho producto. 
+// Además, si un producto ya existente intenta agregarse al producto, incrementar el campo quantity de dicho producto.
 
 // La persistencia de la información se implementará utilizando el file system, donde los archivos “productos,json” y “carrito.json”, respaldan la información.
 // No es necesario realizar ninguna implementación visual, todo el flujo se puede realizar por Postman o por el cliente de tu preferencia.
@@ -44,7 +44,6 @@
 // No olvides app.use(express.json())
 // No es necesario implementar multer
 // Link al video donde se explica.
-
 
 import express from "express";
 import productManager from "./ProductManager.js";
@@ -82,7 +81,7 @@ app.get("/api/products/:pid", async (req, res) => {
 });
 
 app.post("/api/products", async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
     res.status(200).json({ message: "Product Created", product: newProduct });
@@ -91,12 +90,34 @@ app.post("/api/products", async (req, res) => {
   }
 });
 
+app.put("/api/products/:pid", async function (req, res) {
+  const { pid } = req.params;
+  try {
+    const productUpdated = await productManager.updateProductById(
+      +pid,
+      req.body
+    );
+    res.status(200).json({ message: "productUpdated", product: productUpdated });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
 
-// app.post("/api/users", async (req, res) => {
-//   console.log(req.body);
+app.delete("/api/products/:pid", async function (req, res) {
+  const {pid} = req.params;
+  try {
+    const response = await productManager.deleteProduct(+pid);
+    res.status(200).json({message: "Product deleted successfully"})
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+ })
+
+// app.delete("/Api/users/:idUser", async (req, res) => {
+//   const { idUser } = req.params;
 //   try {
-//     const newUser = await usersManager.createUser(req.body);
-//     res.status(200).json({ message: "User created", user: newUser });
+//     const response = await usersManager.deleteUser(+idUser);
+//     res.status(200).json({message: 'User deleted', })
 //   } catch (err) {
 //     res.status(500).json({ err });
 //   }
