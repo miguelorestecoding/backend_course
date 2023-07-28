@@ -80,3 +80,24 @@ app.get("/api/products/:pid", async (req, res) => {
     res.status(500).json({ err });
   }
 });
+
+app.post("/api/products", async (req, res) => {
+  console.log(req.body)
+  try {
+    const newProduct = await productManager.addProduct(req.body);
+    res.status(200).json({ message: "Product Created", product: newProduct });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
+
+
+// app.post("/api/users", async (req, res) => {
+//   console.log(req.body);
+//   try {
+//     const newUser = await usersManager.createUser(req.body);
+//     res.status(200).json({ message: "User created", user: newUser });
+//   } catch (err) {
+//     res.status(500).json({ err });
+//   }
+// });
