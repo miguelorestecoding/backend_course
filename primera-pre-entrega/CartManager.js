@@ -22,7 +22,7 @@ class CartManager {
         const infoCarts = await fs.promises.readFile(this.path, "utf8");
         return JSON.parse(infoCarts);
       } else {
-        [];
+        return [];
       }
     } catch (err) {
       return err;
@@ -38,7 +38,10 @@ class CartManager {
       } else {
         id = cartsPrev[cartsPrev.length - 1].id + 1;
       }
+      console.log('cartsPrev' + cartsPrev);
       cartsPrev.push({...obj, id})
+      await fs.promises.writeFile(this.path, JSON.stringify(cartsPrev));
+      return {...obj, id}
     } catch (err) {
       return err;
     }
@@ -59,3 +62,19 @@ class CartManager {
   }
 
 }
+
+const cartManager = new CartManager('Carts.json');
+export default cartManager;
+
+// const test = ()=> {
+//  console.log(cartManager.getCarts());
+// }
+
+// test();
+
+/*
+Modelo Cart
+{
+    "products": []
+  }
+*/
