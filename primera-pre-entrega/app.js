@@ -144,6 +144,12 @@ app.get("/api/carts", async (req, res) => {
   }
 });
 
+app.post("/api/carts/:cid/product/:pid", function (req, res) {
+  try {} catch (err) {
+    res.status(500).json({ err})
+  }
+})
+
 // La persistencia de la información se implementará utilizando el file system, donde los archivos “productos,json” y “carrito.json”, respaldan la información.
 // No es necesario realizar ninguna implementación visual, todo el flujo se puede realizar por Postman o por el cliente de tu preferencia.
 
