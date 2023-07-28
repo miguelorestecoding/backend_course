@@ -49,6 +49,8 @@ app.listen(8080, () => {
   console.log("Escuchando puerto 8080");
 });
 
+// *** PRODUCTS ***
+
 app.get("/api/products", async (req, res) => {
   try {
     const limit = parseInt(req.query.limit);
@@ -106,6 +108,8 @@ app.delete("/api/products/:pid", async function (req, res) {
   }
  })
 
+// *** CARTS ***
+
 app.get("/api/carts", async (req, res) => {
   try {
     const limit = parseInt(req.params.limit);
@@ -119,6 +123,16 @@ app.get("/api/carts", async (req, res) => {
     res.status(500).json({ err });
   }
  })
+
+ app.get("/api/carts/:cid", async (req, res) => {
+  const { cid } = req.params;
+  try {
+    const cart = await cartManager.getCartById(+cid);
+    res.status(200).json({ messege: "Cart", cart });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
 
  app.post("/api/carts", async (req, res) => {
   console.log(req.body);
