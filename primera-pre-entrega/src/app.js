@@ -39,8 +39,9 @@
 
 import express from "express";
 // import productManager from "./ProductManager.js";
-import cartManager from "./CartManager.js";
+// import cartManager from "./CartManager.js";
 import productRouter from "./routes/product.router.js";
+import cartRouter from "./routes/cart.router.js";
 
 const app = express();
 app.use(express.json());
@@ -52,51 +53,12 @@ app.listen(8080, () => {
 
 //RUTAS
 app.use('/api/products/', productRouter)
+app.use('/api/carts', cartRouter)
+
+// *** PRODUCTS ***
 
 // *** CARTS ***
 
-app.get("/api/carts", async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit);
-    let carts = await cartManager.getCarts();
-
-    if (!isNaN(limit) && limit > 0) {
-      carts = carts.slice(0, limit);
-    }
-    res.status(200).json({messsege: "Carts", carts});
-  } catch (err) {
-    res.status(500).json({ err });
-  }
- })
-
- app.get("/api/carts/:cid", async (req, res) => {
-  const { cid } = req.params;
-  try {
-    const cart = await cartManager.getCartById(+cid);
-    res.status(200).json({ messege: "Cart", cart });
-  } catch (err) {
-    res.status(500).json({ err });
-  }
-});
-
- app.post("/api/carts", async (req, res) => {
-  console.log(req.body);
-  try {
-    const newCart = await cartManager.addCart(req.body);
-    res.status(200).json({ message: "Cart Created", cart: newCart });
-  } catch (err) {
-    res.status(500).json({ err });
-  }
-});
-
-app.post("/api/carts/:cid/product/:pid", function (req, res) {
-  const {cid, pid} = req.params;
-  console.log('cid ' + cid);
-  console.log('pid ' + pid);
-  try {} catch (err) {
-    res.status(500).json({ err})
-  }
-})
 
 // La persistencia de la información se implementará utilizando el file system, donde los archivos “productos,json” y “carrito.json”, respaldan la información.
 // No es necesario realizar ninguna implementación visual, todo el flujo se puede realizar por Postman o por el cliente de tu preferencia.
