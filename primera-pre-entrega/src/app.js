@@ -38,7 +38,7 @@
 
 
 import express from "express";
-import productManager from "./ProductManager.js";
+// import productManager from "./ProductManager.js";
 import cartManager from "./CartManager.js";
 import productRouter from "./routes/product.router.js";
 
@@ -50,64 +50,8 @@ app.listen(8080, () => {
   console.log("Escuchando puerto 8080");
 });
 
-// *** PRODUCTS ***
-
-app.get("/api/products", async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit);
-    let products = await productManager.getProducts();
-
-    if (!isNaN(limit) && limit > 0) {
-      products = products.slice(0, limit);
-    }
-    res.status(200).json({ messege: "Products", products });
-  } catch (err) {
-    res.status(500).json({ err });
-  }
-});
-
-app.get("/api/products/:pid", async (req, res) => {
-  const { pid } = req.params;
-  try {
-    const product = await productManager.getProductsById(+pid);
-    res.status(200).json({ messege: "Product", product });
-  } catch (err) {
-    res.status(500).json({ err });
-  }
-});
-
-app.post("/api/products", async (req, res) => {
-  console.log(req.body);
-  try {
-    const newProduct = await productManager.addProduct(req.body);
-    res.status(200).json({ message: "Product Created", product: newProduct });
-  } catch (err) {
-    res.status(500).json({ err });
-  }
-});
-
-app.put("/api/products/:pid", async function (req, res) {
-  const { pid } = req.params;
-  try {
-    const productUpdated = await productManager.updateProductById(
-      +pid,
-      req.body
-    );
-    res.status(200).json({ message: "productUpdated", product: productUpdated });
-  } catch (err) {
-    res.status(500).json({ err });
-  }
-});
-
-app.delete("/api/products/:pid", async function (req, res) {
-  const {pid} = req.params;
-  try {
-    const response = await productManager.deleteProduct(+pid);
-    res.status(200).json({message: "Product deleted successfully"})
-  } catch (err) {
-    res.status(500).json({ err });
-  }
- })
+//RUTAS
+app.use('/api/products/', productRouter)
 
 // *** CARTS ***
 
