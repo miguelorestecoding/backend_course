@@ -53,7 +53,7 @@ app.listen(8080, () => {
 
 //RUTAS
 app.use('/api/products/', productRouter)
-app.use('/api/carts', cartRouter)
+app.use('/api/carts/', cartRouter)
 
 // *** PRODUCTS ***
 

@@ -40,7 +40,8 @@ class CartManager {
         id = cartsPrev[cartsPrev.length - 1].id + 1;
       }
       console.log('cartsPrev' + cartsPrev);
-      cartsPrev.push({...obj, id})
+      const newCart = { products: [], id}
+      cartsPrev.push(newCart)
       await fs.promises.writeFile(this.path, JSON.stringify(cartsPrev));
       return {...obj, id}
     } catch (err) {
@@ -64,20 +65,30 @@ class CartManager {
 
 async addProductToCart(cid, pid) {
 try {
-  const cart = await this.getCartById(cid);
+  const carts = await this.getCarts()
+  const cart = carts.find( c => c.id === cid)
+  const productIndex = cart.products.findIndex(p => p.product === pid);
 
-  if (!cart) {
-    return console.log('Imposible agregar, ese carrito no existe');
-  } 
-
-  const productToAdd = await productManager.getProductsById(pid);
-
-  if (!productToAdd) {
-    return console.log('Imposible agregar, ese producto no existe');
+  if (productIndex===-1) {
+    cart.products.push({ product: pid, quantity: 1});
+  } else {
+    cart.products[productIndex].quantity++;
   }
+  await fs.promises.writeFile(this.path, JSON.stringify(carts))
+  return cart;
 
-  cart.products.push(productToAdd);
-  await fs.promises.writeFile(this.path, JSON.stringify(cart));
+  // if (!cart) {
+  //   return console.log('Imposible agregar, ese carrito no existe');
+  // } 
+
+  // const productToAdd = await productManager.getProductsById(pid);
+
+  // if (!productToAdd) {
+  //   return console.log('Imposible agregar, ese producto no existe');
+  // }
+
+  // cart.products.push(productToAdd);
+  // await fs.promises.writeFile(this.path, JSON.stringify(cart));
 
 } catch (err) {
   return err;
