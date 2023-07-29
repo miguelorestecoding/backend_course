@@ -145,6 +145,9 @@ app.get("/api/carts", async (req, res) => {
 });
 
 app.post("/api/carts/:cid/product/:pid", function (req, res) {
+  const {cid, pid} = req.params;
+  console.log('cid ' + cid);
+  console.log('pid ' + pid);
   try {} catch (err) {
     res.status(500).json({ err})
   }

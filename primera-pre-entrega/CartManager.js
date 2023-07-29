@@ -10,6 +10,7 @@
 // Además, si un producto ya existente intenta agregarse al producto, incrementar el campo quantity de dicho producto.
 
 import fs from "fs";
+import productManager from "./ProductManager.js";
 
 class CartManager {
   constructor(path) {
@@ -61,6 +62,27 @@ class CartManager {
     }
   }
 
+async addProductToCart(cid, pid) {
+try {
+  const cart = await this.getCartById(cid);
+
+  if (!cart) {
+    return console.log('Imposible agregar, ese carrito no existe');
+  } 
+
+  const productToAdd = await productManager.getProductsById(pid);
+
+  if (!productToAdd) {
+    return console.log('Imposible agregar, ese producto no existe');
+  }
+
+  cart.products.push(productToAdd);
+  await fs.promises.writeFile(this.path, JSON.stringify(cart));
+
+} catch (err) {
+  return err;
+}
+}
 }
 
 const cartManager = new CartManager('Carts.json');
