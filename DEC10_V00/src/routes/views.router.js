@@ -5,8 +5,8 @@ router.get('/', (req, res) => {
     res.send('HANDLEBARS')
 })
 
-router.get('/products', (req, res) => {
-res.render('products')
+router.get('/addProduct', (req, res) => {
+res.render('addProduct')
 });
 
 export default router
