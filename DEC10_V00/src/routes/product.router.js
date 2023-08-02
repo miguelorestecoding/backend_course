@@ -33,7 +33,8 @@ router.post("/", async (req, res) => {
   console.log(req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
-    res.status(200).json({ message: "Product Created", product: newProduct });
+    //res.status(200).json({ message: "Product Created", product: newProduct });
+    res.redirect('/products')
   } catch (err) {
     res.status(500).json({ err });
   }

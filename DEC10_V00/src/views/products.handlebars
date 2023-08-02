@@ -1,6 +1,7 @@
+<h2>products.handlebars</h2>
 {{#if products.length}}
 {{#each products}}
-<h2>Title: {{title}}</h2>
+<h3>Title: {{title}}</h2>
 <p>id: {{id}}</p>
 <p>description: {{description}}</p>
 <p>code: {{code}}</p>
@@ -9,5 +10,6 @@
 <p>category: {{category}}</p>
 <p>thumbnail: {{thumbnail}}</p>
 {{/each}}
+{{else}}
 <h2>No tienes productos Registrados</h2>
 {{/if}}
