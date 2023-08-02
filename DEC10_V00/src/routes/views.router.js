@@ -11,10 +11,10 @@ router.get('/addProduct', (req, res) => {
 res.render('addProduct')
 });
 
-router.get('/products', async (req, res) => {
+router.get('/allProducts', async (req, res) => {
     const products = await productManager.getProducts()
     console.log(products)
-    res.render('products', {products})
+    res.render('allProducts', {products})
 });
 
 export default router
