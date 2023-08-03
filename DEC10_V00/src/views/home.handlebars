@@ -1,0 +1,15 @@
+<h2>home.handlebars</h2>
+{{#if products.length}}
+{{#each products}}
+<h3>Title: {{title}}</h2>
+<p>id: {{id}}</p>
+<p>description: {{description}}</p>
+<p>code: {{code}}</p>
+<p>price: {{price}}</p>
+<p>status: {{status}}</p>
+<p>category: {{category}}</p>
+<p>thumbnail: {{thumbnail}}</p>
+{{/each}}
+{{else}}
+<h2>No tienes productos Registrados</h2>
+{{/if}}

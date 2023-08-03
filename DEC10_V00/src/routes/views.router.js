@@ -17,4 +17,10 @@ router.get('/allProducts', async (req, res) => {
     res.render('allProducts', {products})
 });
 
+router.get('/home', async (req, res) => {
+    const products = await productManager.getProducts()
+    console.log(products)
+    res.render('home', {products})
+});
+
 export default router
