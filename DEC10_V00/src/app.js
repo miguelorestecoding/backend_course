@@ -4,6 +4,7 @@ import cartRouter from './routes/cart.router.js';
 import viewsRouter from './routes/views.router.js';
 import  { __dirname } from './utils.js';
 import { engine } from 'express-handlebars';
+import { Server } from 'socket.io';
 
 const app = express();
 
@@ -24,6 +25,12 @@ app.use('/', viewsRouter);
 
 const PORT = 3000
 
-app.listen(PORT, () => {
+const httpServer = app.listen(PORT, () => {
     console.log(`Escuchando el puerto ${PORT}` )
 });
+
+const socketServer = new Server(httpServer)
+
+socketServer.on('connection', () => {
+    console.log('Soy un cliente conectado y le estoy avisando al app.js')
+})
