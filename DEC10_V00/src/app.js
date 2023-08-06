@@ -10,6 +10,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname+'/public'))
 
 // handlebars
 app.engine('handlebars', engine());
@@ -31,6 +32,6 @@ const httpServer = app.listen(PORT, () => {
 
 const socketServer = new Server(httpServer)
 
-socketServer.on('connection', () => {
-    console.log('Soy un cliente conectado y le estoy avisando al app.js')
+socketServer.on('connection', (socket) => {
+    console.log(`Escucho que el cliente con id: ${socket.id} ha emitido un evento 'connection'`)
 })
