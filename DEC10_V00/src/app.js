@@ -2,8 +2,6 @@ import express from 'express';
 import productRouter from './routes/product.router.js';
 import cartRouter from './routes/cart.router.js';
 import viewsRouter from './routes/views.router.js';
-import fs from "fs";
-import path from 'path';
 import  { __dirname } from './utils.js';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
@@ -25,22 +23,6 @@ app.use('/api/carts/', cartRouter);
 
 app.use('/', viewsRouter);
 
-//ProductManager
-(async () => {
-  const filePath = path.join(__dirname, 'products.json'); // Ruta completa al archivo products.json
-
-  try {
-    const infoProducts = await fs.promises.readFile(filePath, 'utf8'); // Leer el contenido del archivo
-    const productsArray = JSON.parse(infoProducts); // Parsear el contenido del archivo JSON
-    // Ahora puedes usar la variable "productsArray" que contiene el array de objetos
-    // console.log(productsArray);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-})();
-
-
-
 
 const PORT = 3000
 
@@ -51,6 +33,8 @@ const httpServer = app.listen(PORT, () => {
 
 const socketServer = new Server(httpServer)
 
+const realTimeProducts = []
+
 socketServer.on('connection', (socket) => {
     console.log(`Escucho que el cliente con id: ${socket.id} ha emitido un evento 'connection'`);
 
@@ -58,9 +42,14 @@ socketServer.on('connection', (socket) => {
         console.log(`Escucho que un cliente ha emitido un evento 'disconnect'`)
     })
 
-    socket.emit('bienvenida', `Soy el servidor y te doy la bienvenida, querido usuario ${socket.id} !` )
+    socket.emit('bienvenida', `Soy el servidor y le doy la bienvenida al usuario ${socket.id} !` )
 
-    // socket.on('productAdded', (message) => {
-    //     console.log(`Escucho que el cliente me dice: ${message}`)
-    // })
+    socket.on('productAdded', realTimeProductAdded => {
+      console.log('Escucho que el cliente ha agregado un producto')
+      realTimeProducts.push(realTimeProductAdded)
+      socketServer.emit('realTimeProducts', realTimeProducts)
+    })
 })
+
+
+

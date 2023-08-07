@@ -1,5 +1,5 @@
 <h2>addProduct.handlebars</h2>
-<form action="/api/products" method="post" >
+<form  id="realTimeProductsForm">
     title <input type="text" name="title" id="title" value="producto">
     description <input type="text" name="description" id="description" value="descripción producto">
     code <input type="text" name="code" id="code" value="codigo producto">
@@ -9,22 +9,7 @@
     thumbnails <input type="text" name="thumbnails" id="thumbnails" value="ruta imagen">
     <input type="submit" value="ADD">
 </form>
-<h2>realTimeProducts.handlebars</h2>
-{{#if products.length}}
-{{#each products}}
-<h3>Title: {{title}}</h2>
-<p>id: {{id}}</p>
-<p>description: {{description}}</p>
-<p>code: {{code}}</p>
-<p>price: {{price}}</p>
-<p>status: {{status}}</p>
-<p>category: {{category}}</p>
-<p>thumbnail: {{thumbnail}}</p>
-{{/each}}
-
-{{else}}
-<h2>No tienes productos Registrados</h2>
-{{/if}}
+ <div id="divRealTimeProducts"></div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
