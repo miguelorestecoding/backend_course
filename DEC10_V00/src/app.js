@@ -29,7 +29,7 @@ async function readProductsJson() {
   try {
     const productsData = await fs.promises.readFile(__dirname+'/Products.json', "utf8");
     const realTimeProducts = JSON.parse(productsData);
-    console.log(realTimeProducts);
+    // console.log(realTimeProducts);
   } catch (error) {
     console.error('Error:', error);
   }

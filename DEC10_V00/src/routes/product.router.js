@@ -30,10 +30,10 @@ router.get("/:pid", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
-    //res.status(200).json({ message: "Product Created", product: newProduct });
+    // res.status(200).json({ message: "Product Created", product: newProduct });
     res.redirect('/home')
   } catch (err) {
     res.status(500).json({ err });
