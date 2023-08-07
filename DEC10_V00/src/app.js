@@ -3,6 +3,7 @@ import productRouter from './routes/product.router.js';
 import cartRouter from './routes/cart.router.js';
 import viewsRouter from './routes/views.router.js';
 import fs from "fs";
+import path from 'path';
 import  { __dirname } from './utils.js';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
@@ -25,15 +26,21 @@ app.use('/api/carts/', cartRouter);
 app.use('/', viewsRouter);
 
 //ProductManager
-async function readProductsJson() {
+(async () => {
+  const filePath = path.join(__dirname, 'products.json'); // Ruta completa al archivo products.json
+
   try {
-    const productsData = await fs.promises.readFile(__dirname+'/Products.json', "utf8");
-    const realTimeProducts = JSON.parse(productsData);
-    // console.log(realTimeProducts);
+    const infoProducts = await fs.promises.readFile(filePath, 'utf8'); // Leer el contenido del archivo
+    const productsArray = JSON.parse(infoProducts); // Parsear el contenido del archivo JSON
+    // Ahora puedes usar la variable "productsArray" que contiene el array de objetos
+    // console.log(productsArray);
   } catch (error) {
     console.error('Error:', error);
   }
-}
+})();
+
+
+
 
 const PORT = 3000
 
@@ -53,7 +60,7 @@ socketServer.on('connection', (socket) => {
 
     socket.emit('bienvenida', `Soy el servidor y te doy la bienvenida, querido usuario ${socket.id} !` )
 
-    socket.on('productAdded', (message) => {
-        console.log(`Escucho que el cliente me dice: ${message}`)
-    })
+    // socket.on('productAdded', (message) => {
+    //     console.log(`Escucho que el cliente me dice: ${message}`)
+    // })
 })
