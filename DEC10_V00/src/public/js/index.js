@@ -1,57 +1,57 @@
 const socketClient = io();
 
 socketClient.on("productos-actualizados", (productos) => {
-  console.log(productos);
-  actualizarListaProductos(productos);
+  console.log('products desde el socketClient:', productos);
+  // actualizarListaProductos(productos);
 });
 
-function actualizarListaProductos(productos) {
-  const divRealTimeProducts = document.getElementById("divRealTimeProducts");
-  const productsContainer = document.getElementById("productsContainer"); // Identificador del contenedor de productos en products.handlebars
+// function actualizarListaProductos(productos) {
+//   const divRealTimeProducts = document.getElementById("divRealTimeProducts");
+//   const productsContainer = document.getElementById("productsContainer"); // Identificador del contenedor de productos en products.handlebars
 
-  // Limpia el contenido actual de los contenedores
-  divRealTimeProducts.innerHTML = "";
-  productsContainer.innerHTML = "";
+//   // Limpia el contenido actual de los contenedores
+//   divRealTimeProducts.innerHTML = "";
+//   productsContainer.innerHTML = "";
 
-  // Recorre los productos y agrega elementos al contenedor en addProduct.handlebars
-  productos.forEach((producto) => {
-    const productInfo = `
-      <h3>Title: ${producto.title}</h3>
-      <p>id: ${producto.id}</p>
-      <p>description: ${producto.description}</p>
-      <p>code: ${producto.code}</p>
-      <p>price: ${producto.price}</p>
-      <p>status: ${producto.status}</p>
-      <p>category: ${producto.category}</p>
-      <p>thumbnail: ${producto.thumbnail}</p>
-    `;
-    divRealTimeProducts.innerHTML += productInfo;
+//   // Recorre los productos y agrega elementos al contenedor en addProduct.handlebars
+//   productos.forEach((producto) => {
+//     const productInfo = `
+//       <h3>Title: ${producto.title}</h3>
+//       <p>id: ${producto.id}</p>
+//       <p>description: ${producto.description}</p>
+//       <p>code: ${producto.code}</p>
+//       <p>price: ${producto.price}</p>
+//       <p>status: ${producto.status}</p>
+//       <p>category: ${producto.category}</p>
+//       <p>thumbnail: ${producto.thumbnail}</p>
+//     `;
+//     divRealTimeProducts.innerHTML += productInfo;
 
-    // Agrega elementos al contenedor en products.handlebars
-    productsContainer.innerHTML += productInfo;
-  });
-}
+//     // Agrega elementos al contenedor en products.handlebars
+//     productsContainer.innerHTML += productInfo;
+//   });
+// }
 
-document
-  .getElementById("addProductForm")
-  .addEventListener("submit", async (event) => {
-    event.preventDefault(); // Evita el envío automático del formulario
+// document
+//   .getElementById("addProductForm")
+//   .addEventListener("submit", async (event) => {
+//     event.preventDefault(); // Evita el envío automático del formulario
 
-    const formData = new FormData(event.target);
-    const response = await fetch("/api/products", {
-      method: "POST",
-      body: formData,
-    });
+//     const formData = new FormData(event.target);
+//     const response = await fetch("/api/products", {
+//       method: "POST",
+//       body: formData,
+//     });
 
-    if (response.ok) {
-      // No necesitas emitir el evento aquí, ya que el evento se emite en el socketClient.on anterior
-      document.getElementById("message").textContent =
-        "Producto agregado exitosamente.";
-    } else {
-      document.getElementById("message").textContent =
-        "Error al agregar el producto.";
-    }
-  });
+//     if (response.ok) {
+//       // No necesitas emitir el evento aquí, ya que el evento se emite en el socketClient.on anterior
+//       document.getElementById("message").textContent =
+//         "Producto agregado exitosamente.";
+//     } else {
+//       document.getElementById("message").textContent =
+//         "Error al agregar el producto.";
+//     }
+//   });
 
 // DEC10_V00
 // const realTimeProductsForm = document.getElementById("realTimeProductsForm");

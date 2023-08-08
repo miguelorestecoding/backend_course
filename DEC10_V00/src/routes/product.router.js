@@ -31,13 +31,14 @@ router.get("/:pid", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  // console.log('Desde el product.router, req.body:', req.body);
+  console.log('Desde el product.router, req.body:', req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
-    res.status(200).json({ message: "Product Created", product: newProduct });
     products.push(newProduct);
-    console.log(products)
+    console.log('Desde el product.router, newProduct:', newProduct);
+    // console.log('products desde el product.router', products)
     socketServer.emit('productos-actualizados', products);
+    res.status(200).json({ message: "Product Created", product: newProduct });
     // res.redirect('/home');
   } catch (err) {
     res.status(500).json({ err });

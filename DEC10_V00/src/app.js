@@ -2,6 +2,7 @@ import express from 'express';
 import productRouter from './routes/product.router.js';
 import cartRouter from './routes/cart.router.js';
 import viewsRouter from './routes/views.router.js';
+import fs from "fs";
 import  { __dirname } from './utils.js';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
@@ -31,7 +32,9 @@ const httpServer = app.listen(PORT, () => {
     console.log(`Escuchando el puerto ${PORT}` )
 });
 
-export const products = []
+const infoProducts = await fs.promises.readFile(__dirname+'/Products.json', "utf8");
+export const products = JSON.parse(infoProducts);
+// console.log('products desde app.js: ', products)
 
 export const socketServer = new Server(httpServer)
 
