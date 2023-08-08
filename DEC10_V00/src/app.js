@@ -32,6 +32,7 @@ const httpServer = app.listen(PORT, () => {
     console.log(`Escuchando el puerto ${PORT}` )
 });
 
+// Traigo products por File System
 const infoProducts = await fs.promises.readFile(__dirname+'/Products.json', "utf8");
 export const products = JSON.parse(infoProducts);
 // console.log('products desde app.js: ', products)
@@ -40,7 +41,7 @@ export const socketServer = new Server(httpServer)
 
 socketServer.on('connection', (socket) => {
     console.log(`Cliente conectado: ${socket.id}`)
-    socket.emit('productos-actualizado', products);
+    socketServer.emit('productos-actualizados', products);
 });
 
 
