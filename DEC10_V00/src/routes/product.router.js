@@ -1,5 +1,6 @@
 import { Router } from "express";
 import productManager from "../ProductManager.js";
+import { socketServer, products } from "../app.js";
 
 const router = Router();
 
@@ -33,8 +34,10 @@ router.post("/", async (req, res) => {
   // console.log(req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
-    // res.status(200).json({ message: "Product Created", product: newProduct });
-    res.redirect('/home');
+    res.status(200).json({ message: "Product Created", product: newProduct });
+    products.push(newProduct);
+    socketServer.emit('productos-actualizados', products);
+    // res.redirect('/home');
   } catch (err) {
     res.status(500).json({ err });
   }

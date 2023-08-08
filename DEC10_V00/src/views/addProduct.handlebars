@@ -1,5 +1,5 @@
 <h2>addProduct.handlebars</h2>
-<form action="/api/products" method="post" id="addForm">
+<form action="/api/products" method="post">
     title <input type="text" name="title" id="title" value="producto">
     description <input type="text" name="description" id="description" value="descripción producto">
     code <input type="text" name="code" id="code" value="codigo producto">
@@ -9,10 +9,6 @@
     thumbnails <input type="text" name="thumbnails" id="thumbnails" value="ruta imagen">
     <input type="submit" value="ADD">
 </form>
-{{!-- <h2>deleteProduct.handlebars</h2>
-<form action="/api/products" method="delete">
-    id <input type="number" name="id" id="id">
-    <input type="submit" value="DELETE">
-</form> --}}
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
