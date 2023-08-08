@@ -25,6 +25,7 @@
 <div id="divRealTimeProducts"></div>
 
 <h2>products.handlebars</h2>
+<div id="productsContainer">
 {{#if products.length}}
 {{#each products}}
 <h3>Title: {{title}}</h2>
@@ -39,6 +40,8 @@
 {{else}}
 <h2>No tienes productos Registrados</h2>
 {{/if}}
+</div>
+
 
 
 <script src="/socket.io/socket.io.js"></script>
