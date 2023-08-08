@@ -31,12 +31,21 @@ router.get("/:pid", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log('Desde el product.router, req.body:', req.body);
+  // console.log('Desde el product.router, req.body:', req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
-    products.push(newProduct);
-    console.log('Desde el product.router, newProduct:', newProduct);
-    // console.log('products desde el product.router', products)
+
+    // esto es agregado para el websocket y hanldebars
+    let id;
+      if (!products.length) {
+        id = 1;
+      } else {
+        id = products[products.length - 1].id + 1;
+      }
+    const newProductInfo = req.body
+    products.push({...newProductInfo, id});
+    // console.log('Desde el product.router, newProductInfo:', newProductInfo);
+    console.log('products desde el product.router', products)
     socketServer.emit('productos-actualizados', products);
     res.status(200).json({ message: "Product Created", product: newProduct });
     // res.redirect('/home');
