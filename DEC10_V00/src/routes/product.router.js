@@ -80,4 +80,27 @@ router.delete("/:pid", async function (req, res) {
   }
 });
 
+// router.post("/delete", async (req, res) => {
+//   const productId = req.body.productId;
+
+//   try {
+//     // Buscar el índice del producto en la lista
+//     const productIndex = products.findIndex((product) => product.id === productId);
+
+//     if (productIndex !== -1) {
+//       // Eliminar el producto de la lista
+//       products.splice(productIndex, 1);
+
+//       // Emitir la lista actualizada a través de Socket.IO
+//       socketServer.emit("productos-actualizados", products);
+
+//       res.status(200).json({ message: "Product deleted successfully" });
+//     } else {
+//       res.status(404).json({ message: "Product not found" });
+//     }
+//   } catch (err) {
+//     res.status(500).json({ err });
+//   }
+// });
+
 export default router;
