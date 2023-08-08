@@ -43,38 +43,3 @@ socketServer.on('connection', (socket) => {
     console.log(`Cliente conectado: ${socket.id}`)
     socketServer.emit('productos-actualizados', products);
 });
-
-
-
-
-
-
-
-//DEC10_V00
-// socketServer.on('connection', (socket) => {
-
-//     let id;
-//     if (!realTimeProducts.length) {
-//       id = 1;
-//     } else {
-//       id = realTimeProducts[realTimeProducts.length - 1].id + 1;
-//     }
-
-//     console.log(`Escucho que el cliente con id: ${socket.id} ha emitido un evento 'connection'`);
-
-//     socket.on('disconnect', () => {
-//         console.log(`Escucho que un cliente ha emitido un evento 'disconnect'`)
-//     })
-
-//     socket.emit('bienvenida', `Soy el servidor y le doy la bienvenida al usuario ${socket.id} !` )
-
-//     socket.on('productAdded', realTimeProductAdded => {
-//       console.log('Escucho que el cliente ha agregado un producto')
-//       realTimeProducts.push({...realTimeProductAdded, id})
-//       console.log(realTimeProducts)
-//       socketServer.emit('realTimeProducts', realTimeProducts)
-//     })
-// })
-
-
-
