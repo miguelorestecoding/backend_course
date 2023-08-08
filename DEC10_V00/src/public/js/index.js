@@ -26,15 +26,18 @@ realTimeProductsForm.onsubmit = (e) => {
     category: category.value,
     thumbnails: thumbnails.value,
   };
-  console.log(`Se ha agregado un nuevo producto: ${JSON.stringify(realTimeProductAdded)}`)
-  socketClient.emit('productAdded', realTimeProductAdded)
+  console.log(
+    `Se ha agregado un nuevo producto: ${JSON.stringify(realTimeProductAdded)}`
+  );
+  socketClient.emit("productAdded", realTimeProductAdded);
 };
 
-socketClient.on('realTimeProducts', (realTimeProducts) => {
-    const allRealTimeProducts = 
-    realTimeProducts.map((realTimeProduct) => {
-        return `<p>${realTimeProduct.title}: ${realTimeProduct.description}</p>`;
+socketClient.on("realTimeProducts", (realTimeProducts) => {
+  const allRealTimeProducts = realTimeProducts
+    .map((realTimeProduct) => {
+      return `<p>id: ${realTimeProduct.id} </p>
+      <p>title: ${realTimeProduct.title} </p> <p>description: ${realTimeProduct.description}</p> <p>code: ${realTimeProduct.code}</p>`;
     })
-    .join(' ');
-    divRealTimeProducts.innerHTML = allRealTimeProducts
-})
+    .join(" ");
+  divRealTimeProducts.innerHTML = allRealTimeProducts;
+});
