@@ -31,11 +31,12 @@ router.get("/:pid", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  // console.log(req.body);
+  // console.log('Desde el product.router, req.body:', req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
     res.status(200).json({ message: "Product Created", product: newProduct });
     products.push(newProduct);
+    console.log(products)
     socketServer.emit('productos-actualizados', products);
     // res.redirect('/home');
   } catch (err) {
