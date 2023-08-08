@@ -45,10 +45,11 @@ router.post("/", async (req, res) => {
     const newProductInfo = req.body
     products.push({...newProductInfo, id});
     // console.log('Desde el product.router, newProductInfo:', newProductInfo);
-    console.log('products desde el product.router', products)
+    // console.log('products desde el product.router', products)
     socketServer.emit('productos-actualizados', products);
-    res.status(200).json({ message: "Product Created", product: newProduct });
+    // res.status(200).json({ message: "Product Created", product: newProduct });
     // res.redirect('/home');
+    res.redirect('/realTimeProducts');
   } catch (err) {
     res.status(500).json({ err });
   }

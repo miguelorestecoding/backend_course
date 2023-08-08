@@ -1,5 +1,4 @@
-const socketClient = io();
-
+const socketClient = io('http://localhost:3000');
 const divRealTimeProducts = document.getElementById('divRealTimeProducts');
 
 socketClient.on("productos-actualizados", (products) => {

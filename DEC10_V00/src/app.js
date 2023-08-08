@@ -25,7 +25,7 @@ app.use('/api/carts/', cartRouter);
 app.use('/', viewsRouter);
 
 
-const PORT = 3000
+export const PORT = 3000
 
 // Websocket
 const httpServer = app.listen(PORT, () => {
