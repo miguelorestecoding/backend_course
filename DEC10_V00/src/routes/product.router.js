@@ -20,16 +20,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:pid", async (req, res) => {
-  const { pid } = req.params;
-  try {
-    const product = await productManager.getProductsById(+pid);
-    res.status(200).json({ messege: "Product", product });
-  } catch (err) {
-    res.status(500).json({ err });
-  }
-});
-
 router.post("/", async (req, res) => {
   // console.log('Desde el product.router, req.body:', req.body);
   try {
@@ -54,6 +44,17 @@ router.post("/", async (req, res) => {
     res.status(500).json({ err });
   }
 });
+
+router.get("/:pid", async (req, res) => {
+  const { pid } = req.params;
+  try {
+    const product = await productManager.getProductsById(+pid);
+    res.status(200).json({ messege: "Product", product });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
+
 
 router.put("/:pid", async function (req, res) {
   const { pid } = req.params;
@@ -80,20 +81,30 @@ router.delete("/:pid", async function (req, res) {
   }
 });
 
-// router.post("/delete", async (req, res) => {
-//   const productId = req.body.productId;
+// Agregadp para websockets
+router.post("/delete", async function (req, res) {
+  const { productId } = req.body;
+  try {
+    const response = await productManager.deleteProduct(+productId);
+    // res.status(200).json({ message: "Product deleted successfully" });
+    res.redirect('/realTimeProducts');
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
+
+export default router;
+
+
+// router.delete("/", async (req, res) => {
+//   const productId = parseInt(req.body.productId);
 
 //   try {
-//     // Buscar el índice del producto en la lista
 //     const productIndex = products.findIndex((product) => product.id === productId);
 
 //     if (productIndex !== -1) {
-//       // Eliminar el producto de la lista
 //       products.splice(productIndex, 1);
-
-//       // Emitir la lista actualizada a través de Socket.IO
 //       socketServer.emit("productos-actualizados", products);
-
 //       res.status(200).json({ message: "Product deleted successfully" });
 //     } else {
 //       res.status(404).json({ message: "Product not found" });
@@ -102,5 +113,3 @@ router.delete("/:pid", async function (req, res) {
 //     res.status(500).json({ err });
 //   }
 // });
-
-export default router;
