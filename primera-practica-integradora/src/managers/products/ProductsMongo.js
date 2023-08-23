@@ -37,11 +37,11 @@ class ProductsMongo {
         }
     }
 
-
     async deleteOne(id) {
         try {
             const response = await productsModel.findByIdAndDelete(id)
             // const response = await productsModel.deleteOne({_id: id})
+            // el metodo findByIdAndDelete ya busca por _id por eso no es necesario indicar {_id: id} 
             return response
         } catch (error) {
             return error
@@ -50,3 +50,17 @@ class ProductsMongo {
 }
 
 export const productsMongo = new ProductsMongo()
+
+/*
+Modelo de Objeto Producto!
+{
+    "title": "producto",
+    "description": "descripción producto",
+    "code": "codigo producto",
+    "price": 100,
+    "status": true,
+    "stock": 10,
+    "category": "categoría producto",
+    "thumbnails": ["ruta1","ruta2", "ruta3"]
+  }
+  */

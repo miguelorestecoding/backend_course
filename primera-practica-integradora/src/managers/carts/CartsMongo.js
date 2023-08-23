@@ -3,17 +3,17 @@ import { cartsModel } from "../../db/models/carts.model.js";
 class CartsMongo {
   async findAll() {
     try {
-      const courses = await cartsModel.find();
-      return courses;
+      const carts = await cartsModel.find();
+      return carts;
     } catch (error) {
       return error;
     }
   }
 
-  async createOne(obj) {
+  async createOne() {
     try {
-        const courses = await cartsModel.create(obj)
-        return courses
+        const newCart = await cartsModel.create({products: []})
+        return newCart
     } catch (error) {
       return error;
     }
@@ -21,8 +21,8 @@ class CartsMongo {
 
   async findById(id) {
     try {
-        const course = await cartsModel.findById(id)
-        return course
+        const cart = await cartsModel.findById(id)
+        return cart
     } catch (error) {
       return error;
     }

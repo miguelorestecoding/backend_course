@@ -51,10 +51,14 @@ router.get("/", async (req, res) => {
   });
   
   router.delete("/:id", async (req, res) => {
+    const {id} = req.params
     try {
+      const deleteProduct = await productsMongo.deleteOne(id);
+      res.status(200).json({ message: "Product deleted", product: deleteProduct})
     } catch (error) {
       res.status(500).json({ error });
     }
   });
   
   export default router;
+  
