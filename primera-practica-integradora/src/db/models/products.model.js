@@ -5,10 +5,10 @@ const productsSchema = new mongoose.Schema({
     description: {type: String},
     code: {type: Number, required: true},
     price: {type: Number, required: true},
-    status: {type: String},
+    status: {type: Boolean},
     stock: {type: Number, required: true},
     category: {type: String},
-    thumbnails: {type: String, required: true},
+    thumbnails: {type: Array, required: true},
 })
 
 export const productsModel = mongoose.model('Products', productsSchema)
@@ -18,7 +18,7 @@ Modelo de Objeto!
 {
     "title": "producto",
     "description": "descripción producto",
-    "code": "codigo producto",
+    "code": 12345,
     "price": 100,
     "status": true,
     "stock": 10,
