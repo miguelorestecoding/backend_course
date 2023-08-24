@@ -27,11 +27,11 @@ class CartManager {
       } else {
         id = cartsPrev[cartsPrev.length - 1].id + 1;
       }
-      console.log('cartsPrev' + cartsPrev);
-      const newCart = { products: [], id}
-      cartsPrev.push(newCart)
+      console.log("cartsPrev" + cartsPrev);
+      const newCart = { products: [], id };
+      cartsPrev.push(newCart);
       await fs.promises.writeFile(this.path, JSON.stringify(cartsPrev));
-      return {...obj, id}
+      return { ...obj, id };
     } catch (err) {
       return err;
     }
@@ -39,36 +39,36 @@ class CartManager {
 
   async getCartById(cid) {
     try {
-        const cartsPrev = await this.getCarts();
-        const cart = cartsPrev.find( (c) => c.id === cid)
-        if (!cart) {
-            return console.log('Imposible mostrar: ese carrito no existe');
-        } else {
-            return cart;
-        }
+      const cartsPrev = await this.getCarts();
+      const cart = cartsPrev.find((c) => c.id === cid);
+      if (!cart) {
+        return console.log("Imposible mostrar: ese carrito no existe");
+      } else {
+        return cart;
+      }
     } catch (err) {
-        return err;
+      return err;
     }
   }
 
-async addProductToCart(cid, pid) {
-try {
-  const carts = await this.getCarts()
-  const cart = carts.find( c => c.id === cid)
-  const productIndex = cart.products.findIndex(p => p.product === pid);
+  async addProductToCart(cid, pid) {
+    try {
+      const carts = await this.getCarts();
+      const cart = carts.find((c) => c.id === cid);
+      const productIndex = cart.products.findIndex((p) => p.product === pid);
 
-  if (productIndex===-1) {
-    cart.products.push({ product: pid, quantity: 1});
-  } else {
-    cart.products[productIndex].quantity++;
+      if (productIndex === -1) {
+        cart.products.push({ product: pid, quantity: 1 });
+      } else {
+        cart.products[productIndex].quantity++;
+      }
+      await fs.promises.writeFile(this.path, JSON.stringify(carts));
+      return cart;
+    } catch (err) {
+      return err;
+    }
   }
-  await fs.promises.writeFile(this.path, JSON.stringify(carts))
-  return cart;
-} catch (err) {
-  return err;
-}
-}
 }
 
-const cartManager = new CartManager('Carts.json');
+const cartManager = new CartManager("Carts.json");
 export default cartManager;

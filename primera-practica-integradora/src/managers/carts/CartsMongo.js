@@ -45,6 +45,16 @@ class CartsMongo {
       return error;
     }
   }
+
+
+  async addProductToCart(cid, pid) {
+    try {
+      
+    } catch (error) {
+      return error
+    }
+  }
+
 }
 
 export const cartsMongo = new CartsMongo()

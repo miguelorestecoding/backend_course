@@ -56,7 +56,7 @@ Modelo de Objeto Producto!
 {
     "title": "producto",
     "description": "descripción producto",
-    "code": "codigo producto",
+    "code": 12345,
     "price": 100,
     "status": true,
     "stock": 10,
