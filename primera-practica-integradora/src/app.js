@@ -40,4 +40,10 @@ socketServer.on('connection', socket => {
     socket.on('disconnect', () => {
         console.log(`Usuario desconectado: ${socket.id}`)
     })
+
+    socket.on('mensaje', infoMensaje => {
+        mensajes.push(infoMensaje)
+        socketServer.emit('chat', mensajes)
+    })
+
 })
