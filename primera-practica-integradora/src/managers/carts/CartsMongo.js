@@ -10,9 +10,9 @@ class CartsMongo {
     }
   }
 
-  async createOne() {
+  async createOne(obj) {
     try {
-        const newCart = await cartsModel.create({products: []})
+        const newCart = await cartsModel.create(obj)
         return newCart
     } catch (error) {
       return error;
@@ -21,7 +21,7 @@ class CartsMongo {
 
   async findById(id) {
     try {
-        const cart = await cartsModel.findById(id)
+        const cart = await cartsModel.findById(id).populate('products')
         return cart
     } catch (error) {
       return error;
@@ -43,15 +43,6 @@ class CartsMongo {
         return response
     } catch (error) {
       return error;
-    }
-  }
-
-
-  async addProductToCart(cid, pid) {
-    try {
-      
-    } catch (error) {
-      return error
     }
   }
 
