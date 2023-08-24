@@ -4,6 +4,7 @@ import { __dirname } from './utils.js'
 import productsRouter from './routes/products.router.js'
 import cartsRouter from './routes/carts.router.js'
 import viewsRouter from './routes/views.router.js'
+import { Server } from 'socket.io'
 
 import './db/dbConfig.js'
 
@@ -25,6 +26,18 @@ app.use('/api/views', viewsRouter);
 
 const PORT = 8080
 
-app.listen(PORT, ()=>{
+const httpServer = app.listen(PORT, ()=>{
     console.log(`Escuchando puerto ${PORT}` )
+})
+
+const socketServer = new Server(httpServer)
+
+const mensajes = []
+
+socketServer.on('connection', socket => {
+    console.log(`Usuario conectado: ${socket.id}`)
+
+    socket.on('disconnect', () => {
+        console.log(`Usuario desconectado: ${socket.id}`)
+    })
 })
