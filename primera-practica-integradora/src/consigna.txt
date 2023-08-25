@@ -23,3 +23,6 @@ Link al repositorio de GitHub con el proyecto completo (No incluir node_modules)
 Sugerencias
 
 Te recomendamos que, para este entregable, repitas las pruebas realizadas en la pre-entrega de la clase 8.n
+
+
+Llego al minuto 50 de la clase de chat Websocket

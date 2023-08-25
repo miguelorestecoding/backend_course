@@ -3,8 +3,8 @@ import { messagesModel } from "../../db/models/messages.model.js";
 class MessagesMongo {
   async findAll() {
     try {
-      const courses = await messagesModel.find();
-      return courses;
+      const messages = await messagesModel.find();
+      return messages;
     } catch (error) {
       return error;
     }
@@ -12,8 +12,8 @@ class MessagesMongo {
 
   async createOne(obj) {
     try {
-        const courses = await messagesModel.create(obj)
-        return courses
+        const newMessage = await messagesModel.create(obj)
+        return newMessage
     } catch (error) {
       return error;
     }
@@ -21,8 +21,8 @@ class MessagesMongo {
 
   async findById(id) {
     try {
-        const course = await messagesModel.findById(id)
-        return course
+        const message = await messagesModel.findById(id)
+        return message
     } catch (error) {
       return error;
     }
