@@ -6,7 +6,7 @@ import cartsRouter from './routes/carts.router.js'
 import viewsRouter from './routes/views.router.js'
 import { Server } from 'socket.io'
 
-import './db/dbConfig.js'
+// import './db/dbConfig.js'
 
 const app = express()
 
@@ -26,13 +26,13 @@ app.use('/api/views', viewsRouter);
 
 const PORT = 8080
 
-const httpServer = app.listen(PORT, ()=>{
+const httpServer = app.listen(PORT, ()=> {
     console.log(`Escuchando puerto ${PORT}` )
 })
 
 const socketServer = new Server(httpServer)
 
-const mensajes = []
+const messages = []
 
 socketServer.on('connection', socket => {
     console.log(`Usuario conectado: ${socket.id}`)
@@ -41,9 +41,9 @@ socketServer.on('connection', socket => {
         console.log(`Usuario desconectado: ${socket.id}`)
     })
 
-    socket.on('mensaje', infoMensaje => {
-        mensajes.push(infoMensaje)
-        socketServer.emit('chat', mensajes)
+    socket.on('message', infoMessage => {
+        messages.push(infoMessage)
+        socketServer.emit('chat', messages)
     })
 
 })
