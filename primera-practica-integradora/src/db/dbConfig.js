@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const URI =
-  "mongodb+srv://miguelcapo:capomiguel@cluster0.v8zjmrg.mongodb.net/ecommerce?retryWrites=true&w=majority";
+  "mongodb+srv://miguelcapo:capomiguel@cluster0.v8zjmrg.mongodb.net/primeraPracticaIntegradora?retryWrites=true&w=majority";
 
 mongoose
   .connect(URI)

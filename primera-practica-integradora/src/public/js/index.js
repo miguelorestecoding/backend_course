@@ -24,10 +24,14 @@ Swal.fire({
 
 formulario.onsubmit = (e) => {
   e.preventDefault();
+    // Message saved in Array
   const infoMessage = {
     user: chatUser,
     message: inputMessage.value,
   };
+  // Message saved in Mongo
+
+  
   console.log(infoMessage);
   socketClient.emit("message", infoMessage);
 };
@@ -40,3 +44,4 @@ socketClient.on('chat', mensajes => {
     .join(" ");
   divChat.innerHTML = chat;
 })
+

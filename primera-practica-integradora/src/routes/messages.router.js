@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/", async (req, res) => {
     try {
-      const messages = await messagesMongo.findAll();
+      const messages = await messagesMongo.getMessages();
       if (messages.length) {
         res.status(200).json({ message: "Messages", messages });
       } else {
@@ -19,11 +19,11 @@ router.get("/", async (req, res) => {
   router.post("/", async (req, res) => {
     const {user, message} = req.body;
     if (!user || !message) {
-        res.status(400).json({ message: "Some data is missing"});
+        res.status(400).json({ description: "Some data is missing"});
     }
   try {
-    const newMessage = await messagesMongo.createOne(req.body)
-    res.status(200).json({ message: "Product created", product: newMessage });
+    const newMessage = await messagesMongo.sendMessage(req.body)
+    res.status(200).json({ description: "Message sended", message: newMessage });
   } catch (error) {
     res.status(500).json({ error });
   }

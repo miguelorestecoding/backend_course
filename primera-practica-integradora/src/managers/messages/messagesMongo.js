@@ -1,7 +1,7 @@
 import { messagesModel } from "../../db/models/messages.model.js";
 
 class MessagesMongo {
-  async findAll() {
+  async getMessages() {
     try {
       const messages = await messagesModel.find();
       return messages;
@@ -10,7 +10,7 @@ class MessagesMongo {
     }
   }
 
-  async createOne(obj) {
+  async sendMessage(obj) {
     try {
         const newMessage = await messagesModel.create(obj)
         return newMessage
@@ -19,32 +19,6 @@ class MessagesMongo {
     }
   }
 
-  async findById(id) {
-    try {
-        const message = await messagesModel.findById(id)
-        return message
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async updateOne(id, obj) {
-    try {
-        const response = await messagesModel.updateOne({_id: id}, {...obj})
-        return response
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async deleteOne(id) {
-    try {
-        const response = await messagesModel.findByIdAndDelete(id)
-        return response
-    } catch (error) {
-      return error;
-    }
-  }
 }
 
 export const messagesMongo = new MessagesMongo()
