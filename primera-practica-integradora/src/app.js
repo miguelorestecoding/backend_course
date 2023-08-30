@@ -56,7 +56,6 @@ socketServer.on("connection", (socket) => {
       return error
     }
 
-
     socketServer.emit("chat", messages);
   });
 });

@@ -1,0 +1,48 @@
+Deberás entregar el proyecto que has venido armando, cambiando persistencia en base de datos, además de agregar algunos endpoints nuevos a tu ecommerce
+
+Objetivos generales
+
+Contarás con Mongo como sistema de persistencia principal
+Tendrás definidos todos los endpoints para poder trabajar con productos y carritos.
+
+Objetivos específicos
+
+Profesionalizar las consultas de productos con filtros, paginación y ordenamientos
+Profesionalizar la gestión de carrito para implementar los últimos conceptos vistos.
+
+Formato
+
+Link al repositorio de Github, sin la carpeta de node_modules
+
+Sugerencias
+
+Permitir comentarios en el archivo
+La lógica del negocio que ya tienes hecha no debería cambiar, sólo su persistencia. 
+Los nuevos endpoints deben seguir la misma estructura y lógica que hemos seguido. 
+
+Se debe entregar
+
+Con base en nuestra implementación actual de productos, modificar el método GET / para que cumpla con los siguientes puntos:
+Deberá poder recibir por query params un limit (opcional), una page (opcional), un sort (opcional) y un query (opcional)
+-limit permitirá devolver sólo el número de elementos solicitados al momento de la petición, en caso de no recibir limit, éste será de 10.
+page permitirá devolver la página que queremos buscar, en caso de no recibir page, ésta será de 1
+query, el tipo de elemento que quiero buscar (es decir, qué filtro aplicar), en caso de no recibir query, realizar la búsqueda general
+sort: asc/desc, para realizar ordenamiento ascendente o descendente por precio, en caso de no recibir sort, no realizar ningún ordenamiento
+
+Se debe entregar
+
+El método GET deberá devolver un objeto con el siguiente formato:
+{
+	status:success/error
+payload: Resultado de los productos solicitados
+totalPages: Total de páginas
+prevPage: Página anterior
+nextPage: Página siguiente
+page: Página actual
+hasPrevPage: Indicador para saber si la página previa existe
+hasNextPage: Indicador para saber si la página siguiente existe.
+prevLink: Link directo a la página previa (null si hasPrevPage=false)
+nextLink: Link directo a la página siguiente (null si hasNextPage=false)
+}
+
+Se deberá poder buscar productos por categoría o por disponibilidad, y se deberá poder realizar un ordenamiento de estos productos de manera ascendente o descendente por precio.
