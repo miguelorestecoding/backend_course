@@ -60,6 +60,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const {id} = req.params
+  try {
+    const deleteCart = await cartsMongo.deleteOne(id);
+    res.status(200).json({ message: "Cart deleted", cart: deleteCart})
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
 // FATA METODO AGREGAR PRODUCTOS AL CARRITO POR PARAMS? Esto existía en fileSystem.
 // router.post("/:cid/product/:pid", async (req, res) => {
 //   const {cid, pid} = req.params;
