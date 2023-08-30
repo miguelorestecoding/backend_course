@@ -26,3 +26,7 @@ Te recomendamos que, para este entregable, repitas las pruebas realizadas en la 
 
 
 Llego al minuto 50 de la clase de chat Websocket
+
+Consultas a chatGPT:
+
+Este es mi archivo chat.handlebars "" y este index.js "", este es el archivo messages.model "" y este dbConfig.js "" este es messagesMonog.js "" y este messages.router "", quiero que al hacer click en el botón enviar se envíen los datos de usuer y message a la colección messages de mongo

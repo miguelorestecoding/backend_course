@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { messagesMongo } from '../managers/messages/messagesMongo.js';
+import { messagesModel } from '../db/models/messages.model.js';
 
 const router = Router();
 

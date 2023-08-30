@@ -4,10 +4,11 @@ import { __dirname } from "./utils.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
-import messagesRouter from "./routes/messages.router.js"
+import messagesRouter from "./routes/messages.router.js";
 import { Server } from "socket.io";
 
-import './db/dbConfig.js'
+import "./db/dbConfig.js";
+import { messagesMongo } from "./managers/messages/messagesMongo.js";
 
 const app = express();
 
@@ -34,7 +35,8 @@ const httpServer = app.listen(PORT, () => {
 
 const socketServer = new Server(httpServer);
 
-const messages = [];
+// Guardado en Array
+// const messages = [];
 
 socketServer.on("connection", (socket) => {
   console.log(`Usuario conectado: ${socket.id}`);
@@ -43,8 +45,18 @@ socketServer.on("connection", (socket) => {
     console.log(`Usuario desconectado: ${socket.id}`);
   });
 
-  socket.on("message", (infoMessage) => {
-    messages.push(infoMessage);
+  socket.on("message", async (infoMessage) => {
+    // Guardado en Array
+    // messages.push(infoMessage);
+
+    // Guardado en Mongo
+    try {
+      await messagesMongo.sendMessage(infoMessage);
+    } catch (error) {
+      return error
+    }
+
+
     socketServer.emit("chat", messages);
   });
 });
