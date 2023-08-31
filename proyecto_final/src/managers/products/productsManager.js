@@ -1,6 +1,6 @@
 import { productsModel } from '../../db/models/products.model.js'
 
-class ProductsMongo {
+class ProductsManager {
     async findAll() {
         try {
             const users = await productsModel.find();
@@ -47,9 +47,20 @@ class ProductsMongo {
             return error
         }
     }
+
+    async paginateFun(obj) {
+        const {limit, page, query, sort} = obj
+        try {
+            console.log(limit, page)
+            const result = await productsModel.paginate({query},{})
+        } catch (error) {
+            return error
+        }
+    }
+
 }
 
-export const productsMongo = new ProductsMongo()
+export const productsManager = new ProductsManager()
 
 /*
 Modelo de Objeto Producto!

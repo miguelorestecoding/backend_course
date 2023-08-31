@@ -1,6 +1,6 @@
 import { cartsModel } from "../../db/models/carts.model.js";
 
-class CartsMongo {
+class CartsManager {
   async findAll() {
     try {
       const carts = await cartsModel.find();
@@ -48,4 +48,10 @@ class CartsMongo {
 
 }
 
-export const cartsMongo = new CartsMongo()
+export const cartsManager = new CartsManager()
+
+/*
+{ 
+  "products": ["_id", "_id", "_id"]
+}
+*/

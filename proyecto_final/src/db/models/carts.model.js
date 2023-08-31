@@ -5,3 +5,9 @@ const cartsSchema = new mongoose.Schema({
 })
 
 export const cartsModel = mongoose.model('Carts', cartsSchema)
+
+/*
+{ 
+  "products": ["_id", "_id", "_id"]
+}
+*/
