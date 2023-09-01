@@ -56,13 +56,13 @@ class ProductsManager {
   // }
 
   async paginateFun(obj) {
-    const { limit, page, sort, ...query } = obj;
+    const { limit, page, sortPrice, ...query } = obj;
     try {
       console.log(limit, page);
       console.log(query);
       const result = await productsModel.paginate(
         query,
-        { limit, page, sort }
+        { limit, page, sort: {price: sortPrice } }
       );
       const info = {
         count: result.totalDocs,
