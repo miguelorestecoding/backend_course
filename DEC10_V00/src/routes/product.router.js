@@ -7,6 +7,7 @@ const router = Router();
 // *** PRODUCTS ***
 
 router.get("/", async (req, res) => {
+  console.log('router.get en product.router.js')
   try {
     const limit = parseInt(req.query.limit);
     let products = await productManager.getProducts();
@@ -21,7 +22,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  // console.log('Desde el product.router, req.body:', req.body);
+  //console.log('Desde el product.router, req.body:', req.body);
   try {
     const newProduct = await productManager.addProduct(req.body);
 
