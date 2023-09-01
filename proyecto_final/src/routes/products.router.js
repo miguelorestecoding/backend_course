@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { productsManager } from "../dao/productsManager.js";
-import fs from 'fs';
-import {__dirname} from "../utils.js";
+import fs from "fs";
+import { __dirname } from "../utils.js";
 
 const router = Router();
 
@@ -19,19 +19,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const product = await productsManager.findById(id);
-    if (!product) {
-      res.status(400).json({ message: "Invalid id", product });
-    } else {
-      res.status(200).json({ message: "Product found", product });
-    }
-  } catch (error) {
-    res.status(500).json({ error });
-  }
-});
+// router.get("/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const product = await productsManager.findById(id);
+//     if (!product) {
+//       res.status(400).json({ message: "Invalid id", product });
+//     } else {
+//       res.status(200).json({ message: "Product found", product });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error });
+//   }
+// });
 
 router.post("/", async (req, res) => {
   const { title, code, price, stock, thumbnails } = req.body;
@@ -66,12 +66,12 @@ router.delete("/:id", async (req, res) => {
 });
 
 /// Agregar productos a Mongo
-const path = __dirname+'/Users.json';
-router.get('/addProductsToMongo', async (req, res) => {
-    const productsData = await fs.promises.readFile(path) 
-    await productsManager.addProductsToMongo(JSON.parse(productsData))
-    res.json({message: 'Users added successfully'})
-})
+router.get("/addProductsToMongo", async (req, res) => {
+  const path = __dirname + "/Products.json";
+  const productsData = await fs.promises.readFile(path, "utf8");
+  await productsManager.addProductsToMongo(JSON.parse(productsData));
+  res.json({ message: "Users added successfully" });
+});
 
 export default router;
 
