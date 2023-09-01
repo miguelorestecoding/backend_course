@@ -1,4 +1,6 @@
 Los aobjetos del array estan creado con https://mockturtle.net/
+Cursos es Carts
+Users es Products
 
 Deberás entregar el proyecto que has venido armando, cambiando persistencia en base de datos, además de agregar algunos endpoints nuevos a tu ecommerce
 
