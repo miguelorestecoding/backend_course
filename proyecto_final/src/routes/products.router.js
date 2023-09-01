@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { productsManager } from "../dao/productsManager.js";
+import fs from 'fs';
+import {__dirname} from "../utils.js";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const {limit, page, query, sosrt} = req.query
-    const products = await productsManager.paginateFun(req.query);
+    //const {limit, page, query, sort} = req.query
+    const products = await productsManager.findAll();
     if (products.length) {
       res.status(200).json({ message: "Products", products });
     } else {
@@ -62,6 +64,14 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error });
   }
 });
+
+/// Agregar productos a Mongo
+const path = __dirname+'/Users.json';
+router.get('/addProductsToMongo', async (req, res) => {
+    const productsData = await fs.promises.readFile(path) 
+    await productsManager.addProductsToMongo(JSON.parse(productsData))
+    res.json({message: 'Users added successfully'})
+})
 
 export default router;
 
