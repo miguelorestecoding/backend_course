@@ -64,7 +64,7 @@ router.delete("/:idCart/products/:idProduct", async (req, res) => {
   const {idCart, idProduct} = req.params
   try {
     const result = await cartsManager.deleteProductFromCart(idCart, idProduct);
-    res.status(200).json({ message: "Product deleted from Cart"})
+    res.status(200).json({ message: "Product deleted from Cart", result })
   } catch (error) {
     res.status(500).json({ error });
   }

@@ -37,19 +37,20 @@ class CartsManager {
     }
   }
 
-  async deleteOne(id) {
-    try {
-        const response = await cartsModel.findByIdAndDelete(id)
-        return response
-    } catch (error) {
-      return error;
-    }
-  }
+  // async deleteOne(id) {
+  //   try {
+  //       const response = await cartsModel.findByIdAndDelete(id)
+  //       return response
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // }
 
   async deleteProductFromCart(idCart, idProduct) {
     try {
+      console.log(idCart, idProduct)
       const cart = await cartsModel.findById(idCart);
-      if(!course) throw new Error('Cart not found')
+      if(!cart) throw new Error('Cart not found')
       
       const response = await cartsModel.updateOne({_id: idCart},{$pull: {products: idProduct}})
       return response
