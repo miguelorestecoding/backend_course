@@ -60,15 +60,26 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
-  const {id} = req.params
+router.delete("/:idCart/products/:idProduct", async (req, res) => {
+  const {idCart, idProduct} = req.params
   try {
-    const deleteCart = await cartsManager.deleteOne(id);
-    res.status(200).json({ message: "Cart deleted", cart: deleteCart})
+    const result = await cartsManager.deleteProductFromCart(idCart, idProduct);
+    res.status(200).json({ message: "Product deleted from Cart"})
   } catch (error) {
     res.status(500).json({ error });
   }
 });
+
+// BORRA CARRITO
+// router.delete("/:id", async (req, res) => {
+//   const {id} = req.params
+//   try {
+//     const deleteCart = await cartsManager.deleteOne(id);
+//     res.status(200).json({ message: "Cart deleted", cart: deleteCart})
+//   } catch (error) {
+//     res.status(500).json({ error });
+//   }
+// });
 
 // FATA METODO AGREGAR PRODUCTOS AL CARRITO POR PARAMS? Esto existía en fileSystem.
 // router.post("/:cid/product/:pid", async (req, res) => {

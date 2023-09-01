@@ -46,6 +46,19 @@ class CartsManager {
     }
   }
 
+  async deleteProductFromCart(idCart, idProduct) {
+    try {
+      const cart = await cartsModel.findById(idCart);
+      if(!course) throw new Error('Cart not found')
+      
+      const response = await cartsModel.updateOne({_id: idCart},{$pull: {products: idProduct}})
+      return response
+
+    } catch (error) {
+      return error;
+    }
+  }
+
 }
 
 export const cartsManager = new CartsManager()

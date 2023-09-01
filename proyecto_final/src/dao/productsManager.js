@@ -66,15 +66,16 @@ class ProductsManager {
       );
       const info = {
         count: result.totalDocs,
-        pages: result.UsersMongo,
-        next: result.hasNextPage
+        payload: result.docs,
+        totalPages: result.UsersMongo,
+        nextPage: result.hasNextPage
           ? `http://localhost:8080/api/products?page=${result.nextPage}`
           : null,
-        prev: result.hasPrevPage
+        prevPage: result.hasPrevPage
           ? `http://localhost:8080/api/products?page=${result.prevPage}`
           : null,
       };
-      return {info, results: result.docs}
+      return {info}
     } catch (error) {
       console.log(error);
       return error;
