@@ -46,12 +46,12 @@ router.delete("/:idCart/products/:idProduct", async (req, res) => {
   }
 });
 
-router.put("/:idCart/products/:idProduct/", async (req, res) => {
-  const { idCart, idProduct } = req.params;
+router.put("/:idCart/products/:idProduct/quantity/:productQuantity", async (req, res) => {
+  const { idCart, idProduct, productQuantity} = req.params;
   console.log('Desde el router:', idCart, idProduct);
   try {
     const result = await cartsManager.addProductToCart(idCart, idProduct);
-    console.log('Desde el router luego de llamar al metodo addProductToCart:', idCart, idProduct);
+    console.log('Desde el router luego de llamar al metodo addProductToCart:', idCart, idProduct, productQuantity);
     res.status(200).json({ message: "Product added to Cart", result });
   } catch (error) {
     console.log('error desde el router:', idCart, idProduct);

@@ -68,7 +68,7 @@ class CartsManager {
     }
   }
 
-  async addProductToCart(idCart, idProductToAdd) {
+  async addProductToCart(idCart, idProductToAdd, productQuantity) {
     try {
       const cart = await cartsModel.findById(idCart);
       if (!cart) throw new Error("Cart not found");
@@ -76,7 +76,7 @@ class CartsManager {
       if (!product) throw new Error("Product not found");
       const response = await cartsModel.updateOne(
         { _id: idCart },
-        { $push: { products: { idProduct: idProductToAdd } } }
+        { $push: { products: { idProduct: idProductToAdd, quantity: productQuantity } } }
       );
       console.log('Antes del return desde el Manager:', idCart, idProductToAdd);
       return response;
