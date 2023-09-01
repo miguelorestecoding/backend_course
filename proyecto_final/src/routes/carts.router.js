@@ -3,34 +3,10 @@ import { cartsManager } from "../dao/cartsManager.js";
 
 const router = Router();
 
-// router.get("/", async (req, res) => {
-//   try {
-//     const limit = parseInt(req.query.limit);
-//     let carts = await cartsManager.findAll();
-
-//     if (!isNaN(limit) && limit > 0) {
-//       carts = carts.slice(0, limit);
-//     }
-//     res.status(200).json({ messsege: "Carts", carts });
-//   } catch (err) {
-//     res.status(500).json({ err });
-//   }
-// });
-
-// router.get("/:cid", async (req, res) => {
-//   const { cid } = req.params;
-//   try {
-//     const cart = await cartsManager.findById(+cid);
-//     res.status(200).json({ messege: "Cart", cart });
-//   } catch (err) {
-//     res.status(500).json({ err });
-//   }
-// });
-
 router.get("/", async (req, res) => {
   try {
     const carts = await cartsManager.findAll();
-      res.status(200).json({ messege: "Carts", carts });
+    res.status(200).json({ messege: "Carts", carts });
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -61,14 +37,54 @@ router.post("/", async (req, res) => {
 });
 
 router.delete("/:idCart/products/:idProduct", async (req, res) => {
-  const {idCart, idProduct} = req.params
+  const { idCart, idProduct } = req.params;
   try {
     const result = await cartsManager.deleteProductFromCart(idCart, idProduct);
-    res.status(200).json({ message: "Product deleted from Cart", result })
+    res.status(200).json({ message: "Product deleted from Cart", result });
   } catch (error) {
     res.status(500).json({ error });
   }
 });
+
+router.put("/:idCart/products/:idProduct/", async (req, res) => {
+  const { idCart, idProduct } = req.params;
+  console.log('Desde el router:', idCart, idProduct);
+  try {
+    const result = await cartsManager.addProductToCart(idCart, idProduct);
+    console.log('Desde el router luego de llamar al metodo addProductToCart:', idCart, idProduct);
+    res.status(200).json({ message: "Product added to Cart", result });
+  } catch (error) {
+    console.log('error desde el router:', idCart, idProduct);
+    res.status(500).json({ error });
+  }
+});
+
+
+export default router;
+
+// router.get("/", async (req, res) => {
+//   try {
+//     const limit = parseInt(req.query.limit);
+//     let carts = await cartsManager.findAll();
+
+//     if (!isNaN(limit) && limit > 0) {
+//       carts = carts.slice(0, limit);
+//     }
+//     res.status(200).json({ messsege: "Carts", carts });
+//   } catch (err) {
+//     res.status(500).json({ err });
+//   }
+// });
+
+// router.get("/:cid", async (req, res) => {
+//   const { cid } = req.params;
+//   try {
+//     const cart = await cartsManager.findById(+cid);
+//     res.status(200).json({ messege: "Cart", cart });
+//   } catch (err) {
+//     res.status(500).json({ err });
+//   }
+// });
 
 // BORRA CARRITO
 // router.delete("/:id", async (req, res) => {
@@ -93,8 +109,6 @@ router.delete("/:idCart/products/:idProduct", async (req, res) => {
 //     res.status(500).json({ err})
 //   }
 // })
-
-export default router;
 
 /*
 { 

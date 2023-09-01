@@ -1,4 +1,5 @@
 import { cartsModel } from "../db/models/carts.model.js";
+import { productsModel } from "../db/models/products.model.js";
 
 class CartsManager {
   async findAll() {
@@ -12,8 +13,8 @@ class CartsManager {
 
   async createOne(obj) {
     try {
-        const newCart = await cartsModel.create(obj)
-        return newCart
+      const newCart = await cartsModel.create(obj);
+      return newCart;
     } catch (error) {
       return error;
     }
@@ -21,8 +22,8 @@ class CartsManager {
 
   async findById(id) {
     try {
-        const cart = await cartsModel.findById(id).populate('products')
-        return cart
+      const cart = await cartsModel.findById(id).populate("products");
+      return cart;
     } catch (error) {
       return error;
     }
@@ -30,8 +31,8 @@ class CartsManager {
 
   async updateOne(id, obj) {
     try {
-        const response = await cartsModel.updateOne({_id: id}, {...obj})
-        return response
+      const response = await cartsModel.updateOne({ _id: id }, { ...obj });
+      return response;
     } catch (error) {
       return error;
     }
@@ -46,23 +47,47 @@ class CartsManager {
   //   }
   // }
 
-  async deleteProductFromCart(idCart, idProduct) {
+  async deleteProductFromCart(idCart, idProductToDelete) {
     try {
-      console.log(idCart, idProduct)
+      console.log(idCart, idProductToDelete);
       const cart = await cartsModel.findById(idCart);
-      if(!cart) throw new Error('Cart not found')
-      
-      const response = await cartsModel.updateOne({_id: idCart},{$pull: {products: idProduct}})
-      return response
+      if (!cart) throw new Error("Cart not found");
 
+      const response = await cartsModel.updateOne(
+        { _id: idCart },
+        { $pull: { products: { idProduct: idProductToDelete } } }
+      );
+      console.log(
+        "luego de llamar al metodo updateOne que borra con $pull",
+        idCart,
+        idProduct
+      );
+      return response;
     } catch (error) {
       return error;
     }
   }
 
+  async addProductToCart(idCart, idProductToAdd) {
+    try {
+      const cart = await cartsModel.findById(idCart);
+      if (!cart) throw new Error("Cart not found");
+      const product = await productsModel.findById(idProductToAdd);
+      if (!product) throw new Error("Product not found");
+      const response = await cartsModel.updateOne(
+        { _id: idCart },
+        { $push: { products: { idProduct: idProductToAdd } } }
+      );
+      console.log('Antes del return desde el Manager:', idCart, idProductToAdd);
+      return response;
+    } catch (error) {
+      console.log('error desde el Manager:', idCart, idProductToAdd);
+      return error;
+    }
+  }
 }
 
-export const cartsManager = new CartsManager()
+export const cartsManager = new CartsManager();
 
 /*
 { 
