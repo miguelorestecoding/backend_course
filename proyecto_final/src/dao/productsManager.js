@@ -48,22 +48,16 @@ class ProductsManager {
     }
   }
 
-  // async addProductsToMongo(products) {
-  //   try {
-  //     await productsModel.create(products);
-  //     return "Products added successfully";
-  //   } catch (error) {}
-  // }
-
   async paginateFun(obj) {
     const { limit, page, sortPrice, ...query } = obj;
     try {
       console.log(limit, page);
       console.log(query);
-      const result = await productsModel.paginate(
-        query,
-        { limit, page, sort: {price: sortPrice } }
-      );
+      const result = await productsModel.paginate(query, {
+        limit,
+        page,
+        sort: { price: sortPrice },
+      });
       const info = {
         count: result.totalDocs,
         payload: result.docs,
@@ -74,18 +68,28 @@ class ProductsManager {
         prevPage: result.hasPrevPage
           ? `http://localhost:8080/api/products?page=${result.prevPage}`
           : null,
+        page: result.currentPage,
+        hasPrevPage: result.hasPrevPage,
+        hasNextPage: result.hasNextPage,
+        prevLink: result.prevLink,
+        nextLing: result.nextLink,   
       };
-      return {info}
+      return { info };
     } catch (error) {
       console.log(error);
       return error;
     }
   }
 
+  async addProductsToMongo(products) {
+    try {
+      await productsModel.create(products);
+      return "Products added successfully";
+    } catch (error) {}
+  }
 }
 
- 
-  export const productsManager = new ProductsManager();
+export const productsManager = new ProductsManager();
 
 /*
 Modelo de Objeto Producto!
