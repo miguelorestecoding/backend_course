@@ -36,6 +36,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+//BORRA PRODUCTO DE CARRITO
 router.delete("/:idCart/products/:idProduct", async (req, res) => {
   const { idCart, idProduct } = req.params;
   try {
@@ -46,15 +47,27 @@ router.delete("/:idCart/products/:idProduct", async (req, res) => {
   }
 });
 
+// BORRA CARRITO
+router.delete("/:id", async (req, res) => {
+  const {id} = req.params
+  try {
+    const deleteCart = await cartsManager.deleteOne(id);
+    res.status(200).json({ message: "Cart deleted", cart: deleteCart})
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
+// AGREGA PRODUCTO A CARRITO
 router.put("/:idCart/products/:idProduct/quantity/:productQuantity", async (req, res) => {
   const { idCart, idProduct, productQuantity} = req.params;
   console.log('Desde el router:', idCart, idProduct);
   try {
-    const result = await cartsManager.addProductToCart(idCart, idProduct);
+    const result = await cartsManager.addProductToCart(idCart, idProduct, +productQuantity);
     console.log('Desde el router luego de llamar al metodo addProductToCart:', idCart, idProduct, productQuantity);
     res.status(200).json({ message: "Product added to Cart", result });
   } catch (error) {
-    console.log('error desde el router:', idCart, idProduct);
+    console.log('error desde el router:', idCart, idProduct, productQuantity);
     res.status(500).json({ error });
   }
 });
@@ -83,17 +96,6 @@ export default router;
 //     res.status(200).json({ messege: "Cart", cart });
 //   } catch (err) {
 //     res.status(500).json({ err });
-//   }
-// });
-
-// BORRA CARRITO
-// router.delete("/:id", async (req, res) => {
-//   const {id} = req.params
-//   try {
-//     const deleteCart = await cartsManager.deleteOne(id);
-//     res.status(200).json({ message: "Cart deleted", cart: deleteCart})
-//   } catch (error) {
-//     res.status(500).json({ error });
 //   }
 // });
 

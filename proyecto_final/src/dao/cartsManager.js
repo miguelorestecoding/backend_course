@@ -38,14 +38,14 @@ class CartsManager {
     }
   }
 
-  // async deleteOne(id) {
-  //   try {
-  //       const response = await cartsModel.findByIdAndDelete(id)
-  //       return response
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // }
+  async deleteOne(id) {
+    try {
+        const response = await cartsModel.findByIdAndDelete(id)
+        return response
+    } catch (error) {
+      return error;
+    }
+  }
 
   async deleteProductFromCart(idCart, idProductToDelete) {
     try {
