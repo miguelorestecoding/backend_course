@@ -14,9 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public")); /*Carpeta Public*/
 
 // handlebars
-app.engine("handlebars", handlebars.engine());
-app.set("views", __dirname + "/views");
+app.engine("handlebars", handlebars.engine()); // le digo a express que voy a estar usando un motor de plantillas que voy a llamar handlebars y sus propiedades las voy a traer de  handlebars.engine()
+// de handlebars.engine porque estoy importando todo el modulo handlebars. Si importarta solo engine (sería import { engine } .. ) solo pondría engine().
 app.set("view engine", "handlebars");
+app.set("views", __dirname + "/views");
+
 
 // routes
 app.use("/api/products", productsRouter);
