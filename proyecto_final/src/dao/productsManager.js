@@ -3,8 +3,9 @@ import { productsModel } from "../db/models/products.model.js";
 class ProductsManager {
   async findAll() {
     try {
-      const users = await productsModel.find();
-      return users;
+      const products = await productsModel.find();
+      // console.log('desde el productsManager.js', products)
+      return products;
     } catch (error) {
       return error;
     }

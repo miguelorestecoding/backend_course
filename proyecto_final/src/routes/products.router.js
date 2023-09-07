@@ -8,8 +8,8 @@ const router = Router();
 // GET CON PAGINATE
 router.get("/", async (req, res) => {
   try {
-    console.log('Probando')
-    // const {limit, page, query, sort} = req.query
+    console.log('Probando desde el products.router.js')
+    const {limit=10, page=1, query, sort} = req.query
     const products = await productsManager.paginateFun(req.query);
     res.status(200).json({products})
   } catch (error) {

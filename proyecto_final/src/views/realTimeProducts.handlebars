@@ -1,0 +1,30 @@
+<h2>realTimeProducts.handlebars</h2>
+<form action="/api/products" method="post">
+  title <input type="text" name="title" id="title" value="producto" />
+  description <input type="text" name="description" id="description" value="descripción producto" />
+  code <input type="text" name="code" id="code" value="codigo producto" />
+  price <input type="number" name="price" id="price" value="100" />
+  status <input type="checkbox" name="status" id="status" value="on" />
+  stock <input type="number" name="stock" id="stock" value="15">
+  category <input type="text" name="category" id="category" value="categoría producto" />
+  thumbnails <input type="text" name="thumbnails" id="thumbnails" value="ruta imagen" />
+  <input type="submit" value="ADD" />
+</form>
+
+<h2>Delete Product</h2>
+<form action="/api/products/delete" method="post">
+  Product ID: <input type="number" name="productId" required />
+  <input type="submit" value="Delete" />
+</form>
+
+<div id="divRealTimeProducts"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+
+{{!-- <h2>Delete Product by ID</h2>
+<form id="deleteProductForm" action="/api/products/" method="delete">
+  <label for="productId">Product ID:</label>
+  <input type="number" name="productId" id="productId" required />
+  <button type="submit">Delete Product</button>
+</form> --}}
