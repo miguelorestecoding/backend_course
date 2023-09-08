@@ -50,14 +50,14 @@ class ProductsManager {
   }
 
   // Ejemplo de ruta: http://localhost:8080/api/products/paginate?limit=3&page=5&sortPrice=ASC
-  async paginateFun(obj) {
-    const { limit, page, sortPrice, ...query } = obj;
+  async paginateFun(limit, page, query, sortPrice) {
+    // const { limit, page, sortPrice, ...query } = obj;
     try {
       console.log(limit, page);
       console.log(query);
       const result = await productsModel.paginate(query, {
-        limit,
-        page,
+        limit: limit,
+        page: page,
         sort: { price: sortPrice },
       });
       const info = {
@@ -76,7 +76,7 @@ class ProductsManager {
         prevLink: result.prevLink,
         nextLing: result.nextLink,   
       };
-      return { info };
+      return  info ;
     } catch (error) {
       return error;
     }
