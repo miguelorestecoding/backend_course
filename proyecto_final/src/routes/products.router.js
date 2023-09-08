@@ -5,17 +5,29 @@ import { __dirname } from "../utils.js";
 
 const router = Router();
 
-// GET CON PAGINATE
-router.get("/", async (req, res) => {
+router.get("/allProducts", async (req, res) => {
   try {
-    console.log('Probando desde el products.router.js')
-    const {limit=10, page=1, query, sort} = req.query
-    const products = await productsManager.paginateFun(req.query);
+    console.log('Probando desde el products.router.js método findAll()')
+    const products = await productsManager.findAll();
     res.status(200).json({products})
   } catch (error) {
     res.status(500).json({error})
   }
 });
+
+// GET CON PAGINATE
+router.get("/paginate", async (req, res) => {
+  try {
+    console.log('Probando desde el products.router.js metodo paginateFun')
+    // const {limit=10, page=1, sortPrice='ASC', ...query} = req.query
+    const products = await productsManager.paginateFun(req.query);
+    console.log('req.query desde el product.router luego de llamar a paginate', req.query)
+    res.status(200).json({products})
+  } catch (error) {
+    res.status(500).json({error})
+  }
+});
+
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;

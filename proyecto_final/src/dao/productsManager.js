@@ -49,6 +49,7 @@ class ProductsManager {
     }
   }
 
+  // Ejemplo de ruta: http://localhost:8080/api/products/paginate?limit=3&page=5&sortPrice=ASC
   async paginateFun(obj) {
     const { limit, page, sortPrice, ...query } = obj;
     try {
@@ -62,7 +63,7 @@ class ProductsManager {
       const info = {
         count: result.totalDocs,
         payload: result.docs,
-        totalPages: result.UsersMongo,
+        totalPages: result.productsManager,
         nextPage: result.hasNextPage
           ? `http://localhost:8080/api/products?page=${result.nextPage}`
           : null,
@@ -77,7 +78,6 @@ class ProductsManager {
       };
       return { info };
     } catch (error) {
-      console.log(error);
       return error;
     }
   }
