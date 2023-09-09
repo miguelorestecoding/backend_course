@@ -12,11 +12,9 @@ res.render('addProduct')
 });
 
 router.get('/allProducts', async (req, res) => {
-    const products = await fetch('http://localhost:8080/api/products/paginate')
-    const productsJson = await products.json()
-    console.log('productsJson:', productsJson)
-    const getProducts = productsJson.payload
-    res.render('allProducts', {getProducts})
+const getProducts = await fetch('http://localhost:8080/api/products/paginate')
+res.render('allProducts', {getProducts});
+
 });
 
 router.get('/home', async (req, res) => {
