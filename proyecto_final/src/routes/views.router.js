@@ -12,9 +12,9 @@ res.render('addProduct')
 });
 
 router.get('/allProducts', async (req, res) => {
-const getProducts = await fetch('http://localhost:8080/api/products/paginate')
-res.render('allProducts', {getProducts});
-
+    const products = await productsManager.findAll()
+    // console.log(products)
+    res.render('allProducts', {products})
 });
 
 router.get('/home', async (req, res) => {
